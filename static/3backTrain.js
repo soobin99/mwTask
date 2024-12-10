@@ -67,7 +67,7 @@ function updateSystem() {
             clearInterval(timerId);
         }, 500);
         setTimeout(function () {
-            window.location.href = '../main.html';
+            window.location.href = '../templates/train.html';
         }, 2500); //2.5초 뒤 이미지 생성
     }
     return;
