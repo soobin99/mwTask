@@ -9,12 +9,12 @@ var startTime = [];
 var endTime = [];
 
 function getRandomInt() {
-    num1 = 5;
-    num2 = 5;
+    num1 = Math.floor(Math.random() * 9) + 1; // num1을 1~9 사이에서 랜덤하게 선택
+    num2 = 10 - num1; // num2는 10에서 num1을 뺀 값으로 설정
+
     if(cnt%3==0){
     num1 = Math.floor(Math.random() * 9) + 1;
     num2 = Math.floor(Math.random() * 9) + 1;
-
     }
 }
 /*
