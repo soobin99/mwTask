@@ -12,7 +12,6 @@ var endTime = [];
 function getRandomInt() {
     num1 = Math.floor(Math.random() * 9) + 1;
     num2 = Math.floor(Math.random() * 9) + 1;
-    sum = num1+num2
 
     if(cnt%3==0){
         num1 = Math.floor(Math.random() * 9) + 1; // num1을 1~9 사이에서 랜덤하게 선택
@@ -20,6 +19,7 @@ function getRandomInt() {
         if (num2 < 1)
             num2 = 1;
     }
+    sum = num1+num2
 }
 /*
 function getRandomInt() {
