@@ -19,6 +19,8 @@ function getRandomInt() {
         num2 = 20 - sum - num1; // num2는 10에서 num1을 뺀 값으로 설정
         if (num2 < 1)
             num2 = 1;
+        if (num2 > 9)
+            num2 = 9;
         
         console.log(sum, num1, num2);
     }
