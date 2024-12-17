@@ -14,10 +14,13 @@ function getRandomInt() {
     num2 = Math.floor(Math.random() * 9) + 1;
 
     if(cnt%3==0){
+        console.log(num1, num2);
         num1 = Math.floor(Math.random() * 9) + 1; // num1을 1~9 사이에서 랜덤하게 선택
         num2 = 20 - sum - num1; // num2는 10에서 num1을 뺀 값으로 설정
         if (num2 < 1)
             num2 = 1;
+        
+        console.log(sum, num1, num2);
     }
     sum = num1+num2
 }
@@ -67,7 +70,6 @@ function addUserAns() {
     ansCheck.push(0);
     startTime.push(Date.now());
     endTime.push(0);
-    console.log(cnt, numberSequence[cnt], numberSequence[cnt] + numberSequence[cnt - 1], userAns[cnt]);
 }
 
 function userAnsCheck() {
@@ -78,8 +80,6 @@ function userAnsCheck() {
     }
     ansCheck[cnt] = 1;
     endTime[cnt] = Date.now();
-    console.log('userAns Update');
-    console.log(cnt, numberSequence[cnt] + numberSequence[cnt - 1], userAns[cnt]);
     return;
 }
 /*
