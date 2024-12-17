@@ -10,14 +10,16 @@ var startTime = [];
 var endTime = [];
 
 function getRandomInt() {
-    num1 = Math.floor(Math.random() * 9) + 1;
-    num2 = Math.floor(Math.random() * 9) + 1;
     if (sum == 0)
         sum = num1+num2;
-    if(cnt%3==0){
+    if(cnt%3!=0){    
+        num1 = Math.floor(Math.random() * 9) + 1;
+        num2 = Math.floor(Math.random() * 9) + 1;
+    }
+    else{
         console.log(num1, num2);
         num1 = Math.floor(Math.random() * 9) + 1; // num1을 1~9 사이에서 랜덤하게 선택
-        num2 = 20 - sum - num1; // num2는 10에서 num1을 뺀 값으로 설정
+        num2 = 20 - sum - num1; 
         if (num2 < 1)
             num2 = 1;
         else if (num2 > 9)
