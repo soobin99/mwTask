@@ -1,21 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1-Back</title>
+    <link rel="stylesheet" href="../static/styles.css">
 </head>
-<body style="text-align: center">
-<script src='//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
-<script type="text/javascript" src="../static/1back.js"></script>
-<div id="description" style="font-size: 50px; margin-top: 10%;">
-    이미지는 0.5초 동안 표시되었다가 2.5초동안 사라집니다.
-    <br>
-    만약 해당 이미지가 이전 단계 이미지라면 아래의 버튼을 눌러주세요.
-</div>
-<br>
-<button id="userAnsButton" onclick="userAnsCheck()" style="font-size: 30px; margin-top: 1%">이전 이미지와 같습니다</button>
-<br>
-<img id="nBackImage" src="../static/nBackImage/1.svg" style="margin-top:1%; width: 30%; height: 30%;">
-
+<body class="task-page">
+    <main class="page-shell">
+        <section class="content-panel task-panel">
+            <h1 class="task-title">1-Back</h1>
+            <div id="description" class="task-description">
+                이미지는 0.5초 동안 표시된 뒤 2.5초 동안 사라집니다.<br>
+                현재 이미지가 바로 이전 이미지와 같다면 “정답입니다”를, 다르다면 “정답이 아닙니다”를 선택해 주세요.
+            </div>
+            <div class="answer-actions">
+                <button id="correctAnsButton" class="answer-button" type="button" onclick="submitAnswer(true)">정답입니다</button>
+                <button id="incorrectAnsButton" class="answer-button" type="button" onclick="submitAnswer(false)">정답이 아닙니다</button>
+            </div>
+            <div class="stimulus-area">
+                <img id="nBackImage" class="stimulus-image" src="../static/nBackImage/1.svg" alt="n-back stimulus">
+            </div>
+        </section>
+    </main>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="../static/taskButtons.js"></script>
+    <script src="../static/taskFlow.js"></script>
+    <script src="../static/1back.js"></script>
 </body>
 </html>

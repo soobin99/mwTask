@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASA-TLX</title>
+    <link rel="stylesheet" href="../static/styles.css">
+</head>
+<body>
+    <main class="page-shell">
+        <section class="content-panel tlx-panel">
+            <p class="eyebrow">NASA-TLX</p>
+            <h1>과제 부하 설문</h1>
+            <p class="lead">방금 수행한 과제에 대해 0부터 100까지 5단위로 선택해 주세요.</p>
+
+            <form id="tlxForm">
+                <div id="tlxQuestions" class="tlx-list"></div>
+                <button id="submitTlxButton" class="primary-button hidden" type="button">제출</button>
+                <button id="nextTaskButton" class="primary-button hidden" type="button">다음 과제</button>
+            </form>
+        </section>
+    </main>
+
+    <script src="../static/taskFlow.js"></script>
+    <script>
+        const questions = [
+            '문제가 얼마나 어려웠습니까?',
+            '문제를 푸는데 신체적으로 얼마나 어려웠습니까?',
+            '문제를 푸는데 시간적 압박을 느꼈습니까?',
+            '문제를 얼마나 정확하게 푼 것 같습니까? (정답에 대한 확신)',
+            '문제를 직면하고 해결하는데 있어서 당황스럽거나 부담스러웠던 정도가 어떻게 됩니까?',
+            '문제를 푸는데 얼마나 집중하고 신경을 썼습니까?'
+        ];
+        const result = JSON.parse(sessionStorage.getItem('currentTaskResult') || 'null');
+        const questionsEl = document.getElementById('tlxQuestions');
+        const submitButton = document.getElementById('submitTlxButton');
+        const nextButton = document.getElementById('nextTaskButton');
+
+        questions.forEach((question, questionIndex) => {
+            const group = document.createElement('fieldset');
+            group.className = 'tlx-question';
+            group.innerHTML = `<legend>${question}</legend>`;
+
+            const choices = document.createElement('div');
+            choices.className = 'tlx-scale';
+
+            for (let score = 0; score <= 100; score += 5) {
+                const id = `tlx-${questionIndex}-${score}`;
+                choices.insertAdjacentHTML('beforeend', `
+                    <input type="radio" id="${id}" name="q${questionIndex}" value="${score}">
+                    <label for="${id}">${score}</label>
+                `);
+            }
+
+            group.appendChild(choices);
+            questionsEl.appendChild(group);
+        });
+
+        function isComplete() {
+            return questions.every((_, index) => {
+                return document.querySelector(`input[name="q${index}"]:checked`);
+            });
+        }
+
+        document.getElementById('tlxForm').addEventListener('change', () => {
+            submitButton.classList.toggle('hidden', !isComplete());
+        });
+
+        submitButton.addEventListener('click', () => {
+            if (!result || !isComplete()) return;
+            const scores = questions.map((question, index) => ({
+                question,
+                score: document.querySelector(`input[name="q${index}"]:checked`).value
+            }));
+            downloadTaskCsv(result.taskName, result.rows, scores);
+            submitButton.classList.add('hidden');
+            nextButton.classList.remove('hidden');
+        });
+
+        nextButton.addEventListener('click', advanceToNextTask);
+    </script>
+</body>
+</html>

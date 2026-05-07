@@ -13,7 +13,7 @@ function getRandomInt() {
 }
 
 function isTarget(index) {
-    return index > 0 && numberSequence[index] + numberSequence[index - 1] === 20;
+    return index > 1 && numberSequence[index] + numberSequence[index - 1] + numberSequence[index - 2] === 30;
 }
 
 function changeNum() {

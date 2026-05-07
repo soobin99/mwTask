@@ -92,6 +92,28 @@ h1 {
     word-break: keep-all;
 }
 
+.notice-box h2 {
+    margin: 30px 0 10px;
+    color: var(--text);
+    font-size: 22px;
+    line-height: 1.35;
+}
+
+.notice-box ol,
+.notice-box ul {
+    margin: 12px 0 0;
+    padding-left: 24px;
+    color: var(--text);
+    font-size: 18px;
+    line-height: 1.8;
+    text-align: left;
+    word-break: keep-all;
+}
+
+.notice-box li + li {
+    margin-top: 4px;
+}
+
 .checkbox-row {
     display: flex;
     align-items: center;
@@ -242,6 +264,194 @@ h1 {
     color: var(--muted);
 }
 
+.task-page {
+    background:
+        linear-gradient(135deg, rgba(33, 122, 102, 0.08), rgba(242, 195, 96, 0.08)),
+        #f7f8f6;
+}
+
+.task-panel {
+    max-width: 980px;
+    text-align: center;
+}
+
+.task-title {
+    margin: 0;
+    font-size: 34px;
+    line-height: 1.25;
+}
+
+.task-description {
+    margin: 16px auto 28px;
+    max-width: 840px;
+    color: var(--muted);
+    font-size: 24px;
+    line-height: 1.55;
+    word-break: keep-all;
+}
+
+.answer-actions {
+    display: none;
+    grid-template-columns: repeat(2, minmax(0, 230px));
+    justify-content: center;
+    gap: 14px;
+    margin: 22px 0 18px;
+}
+
+.answer-button {
+    min-height: 58px;
+    padding: 12px 18px;
+    border: 1px solid #cfd8d3;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #27322e;
+    font-size: 22px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background 0.18s, border-color 0.18s, color 0.18s, transform 0.18s;
+}
+
+.answer-button:hover {
+    transform: translateY(-1px);
+    border-color: #9aa9a2;
+    background: #f4f6f5;
+}
+
+.answer-button.is-correct-selected {
+    border-color: #2563eb;
+    background: #2563eb;
+    color: #ffffff;
+}
+
+.answer-button.is-incorrect-selected {
+    border-color: #dc2626;
+    background: #dc2626;
+    color: #ffffff;
+}
+
+.stimulus-area {
+    min-height: 360px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stimulus-image {
+    width: min(32vw, 330px);
+    min-width: 220px;
+    height: auto;
+}
+
+.number-stimulus {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 80px;
+    min-height: 260px;
+}
+
+.number-stimulus span {
+    min-width: 130px;
+    font-size: 150px;
+    line-height: 1;
+    font-weight: 800;
+}
+
+.training-info {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 18px;
+    align-items: center;
+    margin: 0 0 24px;
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #fbfcfb;
+    text-align: left;
+}
+
+.training-info img {
+    width: 110px;
+    height: 110px;
+    object-fit: contain;
+    justify-self: center;
+}
+
+.training-info .number-preview {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    color: var(--accent);
+    font-size: 58px;
+    font-weight: 800;
+}
+
+.training-info h2 {
+    margin: 0 0 8px;
+    font-size: 20px;
+}
+
+.training-info p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 17px;
+    line-height: 1.55;
+    word-break: keep-all;
+}
+
+.tlx-panel {
+    max-width: 1040px;
+}
+
+.tlx-list {
+    display: grid;
+    gap: 22px;
+}
+
+.tlx-question {
+    margin: 0;
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+}
+
+.tlx-question legend {
+    padding: 0 8px;
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.tlx-scale {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.tlx-scale input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.tlx-scale label {
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #ffffff;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.tlx-scale input:checked + label {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #ffffff;
+}
+
 @media (max-width: 720px) {
     .page-shell {
         width: min(100% - 24px, 980px);
@@ -258,8 +468,14 @@ h1 {
     }
 
     .lead,
-    .notice-box p {
+    .notice-box p,
+    .notice-box ol,
+    .notice-box ul {
         font-size: 16px;
+    }
+
+    .notice-box h2 {
+        font-size: 19px;
     }
 
     .notice-box {
@@ -275,5 +491,35 @@ h1 {
     .segmented-control,
     .segmented-control.compact {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .task-title {
+        font-size: 28px;
+    }
+
+    .task-description {
+        font-size: 18px;
+    }
+
+    .answer-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .number-stimulus {
+        gap: 32px;
+    }
+
+    .number-stimulus span {
+        min-width: 90px;
+        font-size: 96px;
+    }
+
+    .training-info {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .tlx-scale {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 }

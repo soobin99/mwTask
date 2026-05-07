@@ -1,24 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arithmetic 1-frame Train</title>
+    <link rel="stylesheet" href="../static/styles.css">
 </head>
-<body style="text-align: center">
-<script src='//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
-<script type="text/javascript" src="../static/arithmeticTrain.js"></script>
-<div id="description" style="font-size: 50px; margin-top: 10%;">
-    숫자는 0.5초 동안 표시되었다가 2.5초동안 사라집니다.
-    <br>
-    만약 두 숫자의 합이 10이라면 아래의 버튼을 눌러주세요.
-</div>
-<br>
-<button id="userAnsButton" onclick="userAnsCheck()" style="font-size: 30px; margin-top: 1%">합이 10과 같습니다</button>
-<br>
-<div id="number">
-    <span id="num1" style="font-size: 150px; width: 150px;"></span>
-    <span style="width: 200px; font-size: 70px;">&nbsp&nbsp</span>
-    <span id="num2" style="font-size: 150px; width: 150px;"></span>
-</div>
+<body class="task-page">
+    <main class="page-shell">
+        <section class="content-panel task-panel">
+            <div class="training-info">
+                <div class="number-preview"><span>4</span><span>6</span></div>
+                <div>
+                    <h2>Arithmetic 1-frame Train 안내</h2>
+                    <p>현재 표시된 두 숫자의 합이 10인지 판단합니다. 10이면 “정답입니다”, 아니면 “정답이 아닙니다”를 선택해 주세요.</p>
+                </div>
+            </div>
+            <h1 class="task-title">Arithmetic 1-frame Train</h1>
+            <div id="description" class="task-description">
+                숫자는 0.5초 동안 표시된 뒤 2.5초 동안 사라집니다.<br>
+                현재 숫자들의 합이 10이면 “정답입니다”를, 아니면 “정답이 아닙니다”를 선택해 주세요.
+            </div>
+            <div class="answer-actions">
+                <button id="correctAnsButton" class="answer-button" type="button" onclick="submitAnswer(true)">정답입니다</button>
+                <button id="incorrectAnsButton" class="answer-button" type="button" onclick="submitAnswer(false)">정답이 아닙니다</button>
+            </div>
+            <div id="number" class="number-stimulus">
+                <span id="num1"></span>
+                <span id="num2"></span>
+            </div>
+        </section>
+    </main>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="../static/taskButtons.js"></script>
+    <script src="../static/arithmeticTrain.js"></script>
 </body>
 </html>

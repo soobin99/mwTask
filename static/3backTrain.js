@@ -1,98 +1,58 @@
-var cnt = 0;
 var maxCnt = 20;
 var imageSequence = [];
 var userAns = [];
+var ansCheck = [];
+var startTime = [];
+var endTime = [];
 var num = 1;
 
-
 function getRandomInt() {
-    var randNum = Math.random();
-    return Math.floor(randNum * 9) + 1;
+    return Math.floor(Math.random() * 9) + 1;
+}
+
+function isTarget(index) {
+    return index >= 3 && imageSequence[index] === imageSequence[index - 3];
 }
 
 function changeImage() {
+    if (imageSequence.length >= maxCnt) return;
+    resetAnswerButtons();
     $('#nBackImage').show();
     imageSequence.push(num);
-    addUserAns();
-    return;
+    userAns.push(0);
+    ansCheck.push(0);
+    startTime.push(Date.now());
+    endTime.push(0);
+    setTimeout(hideImage, 500);
+    setTimeout(function() {
+        if (imageSequence.length < maxCnt) {
+            changeImage();
+        } else {
+            window.location.href = '../templates/train.html';
+        }
+    }, 3000);
 }
 
 function hideImage() {
-    console.log(imageSequence);
     $('#nBackImage').hide();
     num = getRandomInt();
-    var imgUrl = '../static/nBackImage/' + num.toString() + '.svg';
-
-    $('#nBackImage').attr('src', imgUrl);
-
+    $('#nBackImage').attr('src', '../static/nBackImage/' + num.toString() + '.svg');
 }
 
-function addUserAns() {
-    if (cnt < 3) {
-        userAns.push(0);
-    } else if (imageSequence[cnt] == imageSequence[cnt - 3]) {
-        userAns.push(-1);
-    } else if (imageSequence[cnt] != imageSequence[cnt - 3]) {
-        userAns.push(1);
-    }
-    console.log(userAns);
+function userAnsCheck(isCorrectAnswer) {
+    var index = imageSequence.length - 1;
+    if (index < 0) return;
+    userAns[index] = isCorrectAnswer === isTarget(index) ? 1 : -1;
+    ansCheck[index] = 1;
+    endTime[index] = Date.now();
 }
 
-function userAnsCheck() {
-    if (cnt < 3) return;
-    if (imageSequence[cnt] == imageSequence[cnt - 3]) {
-        userAns[cnt] = 1;
-    } else if (imageSequence[cnt] != imageSequence[cnt - 3]) {
-        userAns[cnt] = -1;
-    }
-    console.log('userAns Update');
-    console.log(userAns);
-    return;
-}
-
-function updateSystem() {
-    if (cnt < maxCnt) {
-        setTimeout(function () {
-            hideImage();
-        }, 500); //0.5초 뒤 이미지 삭제
-        setTimeout(function () {
-            cnt += 1;
-            changeImage();
-        }, 2500); //2.5초 뒤 이미지 생
-        console.log(cnt);
-
-    } else {
-        setTimeout(function () {
-            hideImage();
-            clearInterval(timerId);
-        }, 500);
-        setTimeout(function () {
-            window.location.href = '../templates/train.html';
-        }, 2500); //2.5초 뒤 이미지 생성
-    }
-    return;
-}
-
-$(document).ready(function () {
+$(document).ready(function() {
     $('#nBackImage').hide();
-    $('#userAnsButton').hide();
-
-    setTimeout(function () {
-        $('#description').css("fontSize", '30px');
-        $('#description').css("margin-top", '2%');
-        $('#userAnsButton').show();
-
+    hideAnswerButtons();
+    setTimeout(function() {
+        $('#description').css({'fontSize': '20px', 'margin-top': '0'});
+        showAnswerButtons();
         changeImage();
-
-        setTimeout(function () {
-            hideImage();
-        }, 500); //0.5초 뒤 이미지 삭제
-
     }, 3000);
-
-    timerId = setInterval(updateSystem, 3000);
-    //while (cnt <= maxCnt) {}
 });
-
-
-//setTimeout(function () {alert("hello");}, 3000);

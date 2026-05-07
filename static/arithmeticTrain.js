@@ -1,31 +1,38 @@
-var cnt = 0;
 var maxCnt = 20;
 var numberSequence = [];
 var userAns = [];
+var ansCheck = [];
+var startTime = [];
+var endTime = [];
 var num1 = 1;
 var num2 = 1;
-
 
 function getRandomInt() {
     num1 = Math.floor(Math.random() * 9) + 1;
     num2 = Math.floor(Math.random() * 9) + 1;
-    if (num1 + num2 != 10) {
-        if (num1 + num2 > 10) {
-            if (num1 > num2) num1 = Math.floor(Math.random() * 7) + 2;
-            else num2 = Math.floor(Math.random() * 7) + 2;
-        } else {
-            if (num1 > num2) num2 = Math.floor(Math.random() * 7) + 3;
-            else num1 = Math.floor(Math.random() * 7) + 3;
-        }
+}
 
-    }
+function isTarget(index) {
+    return numberSequence[index] === 10;
 }
 
 function changeNum() {
+    if (numberSequence.length >= maxCnt) return;
+    resetAnswerButtons();
     $('#number').show();
     numberSequence.push(num1 + num2);
-    addUserAns();
-    return;
+    userAns.push(0);
+    ansCheck.push(0);
+    startTime.push(Date.now());
+    endTime.push(0);
+    setTimeout(hideNum, 500);
+    setTimeout(function() {
+        if (numberSequence.length < maxCnt) {
+            changeNum();
+        } else {
+            window.location.href = '../templates/train.html';
+        }
+    }, 3000);
 }
 
 function hideNum() {
@@ -33,64 +40,25 @@ function hideNum() {
     getRandomInt();
     $('#num1').text(num1.toString());
     $('#num2').text(num2.toString());
-
 }
 
-function addUserAns() {
-    if (numberSequence[cnt] == 10) {
-        userAns.push(-1);
-    } else {
-        userAns.push(1);
-    }
-    console.log(cnt, numberSequence[cnt], userAns[cnt]);
+function userAnsCheck(isCorrectAnswer) {
+    var index = numberSequence.length - 1;
+    if (index < 0) return;
+    userAns[index] = isCorrectAnswer === isTarget(index) ? 1 : -1;
+    ansCheck[index] = 1;
+    endTime[index] = Date.now();
 }
 
-function userAnsCheck() {
-    if (numberSequence[cnt] == 10) {
-        userAns[cnt] = 1;
-    } else {
-        userAns[cnt] = -1;
-    }
-    console.log('userAns Update');
-    console.log(userAns);
-    return;
-}
-
-function updateSystem() {
-    if (cnt < maxCnt) {
-        setTimeout(function () {
-            hideNum();
-        }, 500); //0.5초 뒤 이미지 삭제
-        setTimeout(function () {
-            changeNum();
-            cnt += 1;
-        }, 2500); //2.5초 뒤 이미지 생성
-    }
-    else {
-        setTimeout(function () {
-            hideNum();
-            clearInterval(timerId);
-        }, 500);
-        setTimeout(function () {
-            window.location.href = '../templates/train.html';
-        }, 2500); //2.5초 뒤 이미지 생성
-    }
-    return;
-}
-
-$(document).ready(function () {
+$(document).ready(function() {
     $('#number').hide();
-    $('#userAnsButton').hide();
-
-    setTimeout(function () {
-        $('#description').css("fontSize", '30px');
-        $('#description').css("margin-top", '2%');
-        $('#userAnsButton').show();
+    hideAnswerButtons();
+    getRandomInt();
+    $('#num1').text(num1.toString());
+    $('#num2').text(num2.toString());
+    setTimeout(function() {
+        $('#description').css({'fontSize': '20px', 'margin-top': '0'});
+        showAnswerButtons();
+        changeNum();
     }, 3000);
-
-    timerId = setInterval(updateSystem, 3000);
-    //while (cnt <= maxCnt) {}
 });
-
-
-//setTimeout(function () {alert("hello");}, 3000);

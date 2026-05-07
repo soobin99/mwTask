@@ -1,33 +1,69 @@
-var cnt = 0;
-var maxCnt = 40;
+var maxCnt = 100;
 var numberSequence = [];
 var userAns = [];
-var num1 = 1;
-var num2 = 1;
 var ansCheck = [];
 var startTime = [];
 var endTime = [];
+var num1 = 1;
+var num2 = 1;
+var targetSchedule = createTargetSchedule(maxCnt, 0);
+
+function createTargetSchedule(total, minIndex) {
+    var schedule = Array(total).fill(false);
+    var candidates = [];
+    for (var i = minIndex; i < total; i++) candidates.push(i);
+    for (var j = candidates.length - 1; j > 0; j--) {
+        var k = Math.floor(Math.random() * (j + 1));
+        var temp = candidates[j];
+        candidates[j] = candidates[k];
+        candidates[k] = temp;
+    }
+    for (var t = 0; t < Math.round(total * 0.3); t++) schedule[candidates[t]] = true;
+    return schedule;
+}
 
 function getRandomInt() {
-    num1 = Math.floor(Math.random() * 9) + 1;
-    num2 = Math.floor(Math.random() * 9) + 1;
-    if (num1 + num2 != 10) {
-        if (num1 + num2 > 10) {
-            if (num1 > num2) num1 = Math.floor(Math.random() * 7) + 2;
-            else num2 = Math.floor(Math.random() * 7) + 2;
-        } else {
-            if (num1 > num2) num2 = Math.floor(Math.random() * 7) + 3;
-            else num1 = Math.floor(Math.random() * 7) + 3;
-        }
+    var nextIndex = numberSequence.length;
+    var sum = targetSchedule[nextIndex] ? 10 : getRandomNonTargetSum(10);
+    setPairForSum(sum);
+}
 
+function getRandomNonTargetSum(target) {
+    var sum = Math.floor(Math.random() * 17) + 2;
+    while (sum === target) {
+        sum = Math.floor(Math.random() * 17) + 2;
     }
+    return sum;
+}
+
+function setPairForSum(sum) {
+    var min = Math.max(1, sum - 9);
+    var max = Math.min(9, sum - 1);
+    num1 = Math.floor(Math.random() * (max - min + 1)) + min;
+    num2 = sum - num1;
+}
+
+function isTarget(index) {
+    return numberSequence[index] === 10;
 }
 
 function changeNum() {
+    if (numberSequence.length >= maxCnt) return;
+    resetAnswerButtons();
     $('#number').show();
     numberSequence.push(num1 + num2);
-    addUserAns();
-    return;
+    userAns.push(0);
+    ansCheck.push(0);
+    startTime.push(Date.now());
+    endTime.push(0);
+    setTimeout(hideNum, 500);
+    setTimeout(function() {
+        if (numberSequence.length < maxCnt) {
+            changeNum();
+        } else {
+            completeTask('arithmetic1', buildRows());
+        }
+    }, 3000);
 }
 
 function hideNum() {
@@ -35,97 +71,66 @@ function hideNum() {
     getRandomInt();
     $('#num1').text(num1.toString());
     $('#num2').text(num2.toString());
-
 }
 
-function addUserAns() {
-    if (numberSequence[cnt] == 10) {
-        userAns.push(-1);
-    } else {
-        userAns.push(1);
-    }
-    ansCheck.push(0);
-    startTime.push(Date.now());
-    endTime.push(0);
-    console.log(cnt, numberSequence[cnt], userAns[cnt]);
+function userAnsCheck(isCorrectAnswer) {
+    var index = numberSequence.length - 1;
+    if (index < 0) return;
+    userAns[index] = isCorrectAnswer === isTarget(index) ? 1 : -1;
+    ansCheck[index] = 1;
+    endTime[index] = Date.now();
 }
 
-function userAnsCheck() {
-    if (numberSequence[cnt-1] == 10) {
-        userAns[cnt-1] = 1;
-    } else {
-        userAns[cnt-1] = -1;
-    }
-    ansCheck[cnt] = 1;
-    endTime[cnt] = Date.now();
-    console.log('userAns Update');
-    console.log(cnt-1, numberSequence[cnt-1], userAns[cnt-1]);
-    return;
+function buildRows() {
+    return numberSequence.map(function(stimulus, index) {
+        return {
+            cnt: index,
+            stimulus: stimulus,
+            userAns: userAns[index],
+            ansCheck: ansCheck[index],
+            startTime: startTime[index],
+            endTime: endTime[index],
+            responseTime: endTime[index] ? endTime[index] - startTime[index] : 0,
+            accuracy: userAns[index] === 1 ? 1 : 0
+        };
+    });
 }
 
-function updateSystem() {
-    if (cnt < maxCnt) {
-        setTimeout(function () {
-            hideNum();
-        }, 500); //0.5초 뒤 이미지 삭제
-        setTimeout(function () {
-            changeNum();
-            cnt += 1;
-        }, 2500); //2.5초 뒤 이미지 생성
+function downloadCSV() {
+    var rows = [{cnt: 'cnt', numberSequence: 'numberSequence', userAns: 'userAns', ansCheck: 'ansCheck', startTime: 'startTime', endTime: 'endTime', responseTime: 'responseTime'}];
+    for (var i = 0; i < numberSequence.length; i++) {
+        rows.push({
+            cnt: i,
+            numberSequence: numberSequence[i],
+            userAns: userAns[i],
+            ansCheck: ansCheck[i],
+            startTime: startTime[i],
+            endTime: endTime[i],
+            responseTime: endTime[i] ? endTime[i] - startTime[i] : 0
+        });
     }
-    else {
-        setTimeout(function () {
-            hideNum();
-            clearInterval(timerId);
-        }, 500);
-        setTimeout(function () {
-            window.location.href = '../index.html';
-            downloadCSV();
-        }, 2500); //2.5초 뒤 이미지 생성
-    }
-    return;
+    var csv = '';
+    $.each(rows, function(i, item) {
+        csv += item.cnt + ',' + item.numberSequence + ',' + item.userAns + ',' + item.ansCheck + ',' + item.startTime + ',' + item.endTime + ',' + item.responseTime + '\r\n';
+    });
+    var downloadLink = document.createElement('a');
+    var blob = new Blob([csv], {type: 'text/csv;charset=utf-8'});
+    downloadLink.href = URL.createObjectURL(blob);
+    downloadLink.download = 'arithmetic_' + new Date().toString() + '.csv';
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
 }
 
-$(document).ready(function () {
+$(document).ready(function() {
     $('#number').hide();
-    $('#userAnsButton').hide();
-
-    setTimeout(function () {
-        $('#description').css("fontSize", '30px');
-        $('#description').css("margin-top", '2%');
-        $('#userAnsButton').show();
+    hideAnswerButtons();
+    getRandomInt();
+    $('#num1').text(num1.toString());
+    $('#num2').text(num2.toString());
+    setTimeout(function() {
+        $('#description').css({'fontSize': '20px', 'margin-top': '0'});
+        showAnswerButtons();
+        changeNum();
     }, 3000);
-
-    timerId = setInterval(updateSystem, 3000);
-    //while (cnt <= maxCnt) {}
 });
-
-function downloadCSV(){
-		var array = [];
-
-        array.push({cnt:'cnt', numberSequence: 'numberSequence', userAns: 'userAns',
-            ansCheck:'ansCheck',startTime:'startTime',endTime:'endTime'});
-        for(var i=0;i<numberSequence.length;i++){
-            array.push({cnt:i, numberSequence: numberSequence[i], userAns: userAns[i],
-            ansCheck:ansCheck[i], startTime: startTime[i], endTime: endTime[i]});
-        }
-
-		var a = "";
-		$.each(array, function(i, item){
-			a += item.cnt + "," + item.numberSequence + "," + item.userAns + "," +
-                item.ansCheck + "," + item.startTime + "," + item.endTime + "\r\n";
-		});
-
-		var downloadLink = document.createElement("a");
-		var blob = new Blob([a], { type: "text/csv;charset=utf-8" });
-		var url = URL.createObjectURL(blob);
-		downloadLink.href = url;
-        let today = new Date();
-		downloadLink.download = "arithmetic_"+today.toString()+".csv";
-
-		document.body.appendChild(downloadLink);
-		downloadLink.click();
-		document.body.removeChild(downloadLink);
-	}
-
-//setTimeout(function () {alert("hello");}, 3000);

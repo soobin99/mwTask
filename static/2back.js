@@ -5,7 +5,7 @@ var ansCheck = [];
 var startTime = [];
 var endTime = [];
 var num = 1;
-var targetSchedule = createTargetSchedule(maxCnt, 3);
+var targetSchedule = createTargetSchedule(maxCnt, 2);
 
 function createTargetSchedule(total, minIndex) {
     var schedule = Array(total).fill(false);
@@ -27,46 +27,13 @@ function getDifferentImage(target) {
 }
 
 function getRandomInt(nextIndex) {
-    if (nextIndex < 3) return Math.floor(Math.random() * 9) + 1;
-    var target = imageSequence[nextIndex - 3];
+    if (nextIndex < 2) return Math.floor(Math.random() * 9) + 1;
+    var target = imageSequence[nextIndex - 2];
     return targetSchedule[nextIndex] ? target : getDifferentImage(target);
 }
 
 function isTarget(index) {
-    return index >= 3 && imageSequence[index] === imageSequence[index - 3];
-}
-
-function changeImage() {
-    if (imageSequence.length >= maxCnt) return;
-    resetAnswerButtons();
-    $('#nBackImage').show();
-    imageSequence.push(num);
-    userAns.push(0);
-    ansCheck.push(0);
-    startTime.push(Date.now());
-    endTime.push(0);
-    setTimeout(hideImage, 500);
-    setTimeout(function() {
-        if (imageSequence.length < maxCnt) {
-            changeImage();
-        } else {
-            completeTask('3back', buildRows());
-        }
-    }, 3000);
-}
-
-function hideImage() {
-    $('#nBackImage').hide();
-    num = getRandomInt(imageSequence.length);
-    $('#nBackImage').attr('src', '../static/nBackImage/' + num.toString() + '.svg');
-}
-
-function userAnsCheck(isCorrectAnswer) {
-    var index = imageSequence.length - 1;
-    if (index < 0) return;
-    userAns[index] = isCorrectAnswer === isTarget(index) ? 1 : -1;
-    ansCheck[index] = 1;
-    endTime[index] = Date.now();
+    return index >= 2 && imageSequence[index] === imageSequence[index - 2];
 }
 
 function buildRows() {
@@ -84,30 +51,37 @@ function buildRows() {
     });
 }
 
-function downloadCSV() {
-    var rows = [{cnt: 'cnt', imageSequence: 'imageSequence', userAns: 'userAns', ansCheck: 'ansCheck', startTime: 'startTime', endTime: 'endTime', responseTime: 'responseTime'}];
-    for (var i = 0; i < imageSequence.length; i++) {
-        rows.push({
-            cnt: i,
-            imageSequence: imageSequence[i],
-            userAns: userAns[i],
-            ansCheck: ansCheck[i],
-            startTime: startTime[i],
-            endTime: endTime[i],
-            responseTime: endTime[i] ? endTime[i] - startTime[i] : 0
-        });
-    }
-    var csv = '';
-    $.each(rows, function(i, item) {
-        csv += item.cnt + ',' + item.imageSequence + ',' + item.userAns + ',' + item.ansCheck + ',' + item.startTime + ',' + item.endTime + ',' + item.responseTime + '\r\n';
-    });
-    var downloadLink = document.createElement('a');
-    var blob = new Blob([csv], {type: 'text/csv;charset=utf-8'});
-    downloadLink.href = URL.createObjectURL(blob);
-    downloadLink.download = '3back_' + new Date().toString() + '.csv';
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
+function changeImage() {
+    if (imageSequence.length >= maxCnt) return;
+    resetAnswerButtons();
+    $('#nBackImage').show();
+    imageSequence.push(num);
+    userAns.push(0);
+    ansCheck.push(0);
+    startTime.push(Date.now());
+    endTime.push(0);
+    setTimeout(hideImage, 500);
+    setTimeout(function() {
+        if (imageSequence.length < maxCnt) {
+            changeImage();
+        } else {
+            completeTask('2back', buildRows());
+        }
+    }, 3000);
+}
+
+function hideImage() {
+    $('#nBackImage').hide();
+    num = getRandomInt(imageSequence.length);
+    $('#nBackImage').attr('src', '../static/nBackImage/' + num.toString() + '.svg');
+}
+
+function userAnsCheck(isCorrectAnswer) {
+    var index = imageSequence.length - 1;
+    if (index < 0) return;
+    userAns[index] = isCorrectAnswer === isTarget(index) ? 1 : -1;
+    ansCheck[index] = 1;
+    endTime[index] = Date.now();
 }
 
 $(document).ready(function() {

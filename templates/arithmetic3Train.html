@@ -3,16 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arithmetic 1-frame</title>
+    <title>Arithmetic 3-frame Train</title>
     <link rel="stylesheet" href="../static/styles.css">
 </head>
 <body class="task-page">
     <main class="page-shell">
         <section class="content-panel task-panel">
-            <h1 class="task-title">Arithmetic 1-frame</h1>
+            <div class="training-info">
+                <div class="number-preview"><span>8</span><span>10</span><span>12</span></div>
+                <div>
+                    <h2>Arithmetic 3-frame Train 안내</h2>
+                    <p>전전 숫자 쌍, 전 숫자 쌍, 현재 숫자 쌍의 합을 더해 30인지 판단합니다. 30이면 “정답입니다”, 아니면 “정답이 아닙니다”를 선택해 주세요.</p>
+                </div>
+            </div>
+            <h1 class="task-title">Arithmetic 3-frame Train</h1>
             <div id="description" class="task-description">
                 숫자는 0.5초 동안 표시된 뒤 2.5초 동안 사라집니다.<br>
-                현재 숫자들의 합이 10이면 “정답입니다”를, 아니면 “정답이 아닙니다”를 선택해 주세요.
+                전전 숫자, 전 숫자, 현재 숫자들의 합이 30이면 “정답입니다”를, 아니면 “정답이 아닙니다”를 선택해 주세요.
             </div>
             <div class="answer-actions">
                 <button id="correctAnsButton" class="answer-button" type="button" onclick="submitAnswer(true)">정답입니다</button>
@@ -26,7 +33,6 @@
     </main>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="../static/taskButtons.js"></script>
-    <script src="../static/taskFlow.js"></script>
-    <script src="../static/arithmetic.js"></script>
+    <script src="../static/arithmetic3Train.js"></script>
 </body>
 </html>
