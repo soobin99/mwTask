@@ -45,5 +45,5 @@ function showTrainTarget(isTargetTrial) {
     feedback
         .removeClass('correct incorrect')
         .addClass(isTargetTrial ? 'correct' : 'incorrect')
-        .text(isTargetTrial ? '정답입니다' : '정답이 아닙니다');
+        .text(isTargetTrial ? '"정답입니다"를 선택해주세요' : '"정답이 아닙니다"를 선택해주세요');
 }

@@ -5,6 +5,7 @@ var startTime = [];
 var endTime = [];
 var sequence = [3, 6, 8, 3, 9];
 var sequenceIndex = 0;
+var redirectTimer = null;
 
 function isTarget(index) {
     return index >= 3 && imageSequence[index] === imageSequence[index - 3];
@@ -30,10 +31,12 @@ function changeImage() {
     }
     sequenceIndex += 1;
     setTimeout(hideImage, 500);
-    setTimeout(function() {
+    redirectTimer = setTimeout(function() {
         if (sequenceIndex < sequence.length) {
             changeImage();
         } else {
+            hideImage();
+            hideAnswerButtons();
             window.location.href = '../templates/train.html';
         }
     }, 3000);

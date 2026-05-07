@@ -3,7 +3,7 @@ var userAns = [];
 var ansCheck = [];
 var startTime = [];
 var endTime = [];
-var pairs = [[4, 5], [6, 5], [5, 5], [4, 5]];
+var pairs = [[4, 5], [6, 5], [5, 5], [4, 4]];
 var pairIndex = 0;
 
 function isTarget(index) {
