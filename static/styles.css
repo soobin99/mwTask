@@ -264,6 +264,17 @@ h1 {
     color: var(--muted);
 }
 
+.primary-menu-button {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #ffffff;
+}
+
+.primary-menu-button:hover {
+    border-color: var(--accent-strong);
+    background: var(--accent-strong);
+}
+
 .task-page {
     background:
         linear-gradient(135deg, rgba(33, 122, 102, 0.08), rgba(242, 195, 96, 0.08)),

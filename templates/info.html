@@ -1,91 +1,147 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>참여자 정보 입력</title>
-    <link rel="stylesheet" href="../static/styles.css">
-</head>
-<body>
+    <link rel="stylesheet" href="../static/styles.css" />
+  </head>
+  <body>
     <main class="page-shell">
-        <section class="content-panel form-panel">
-            <p class="eyebrow">Participant Info</p>
-            <h1>참여자 정보</h1>
-            <p class="lead">실험 진행을 위해 아래 정보를 입력해 주세요.</p>
+      <section class="content-panel form-panel">
+        <p class="eyebrow">Participant Info</p>
+        <h1>참여자 정보</h1>
+        <p class="lead">실험 진행을 위해 아래 정보를 입력해 주세요.</p>
 
-            <form id="participantForm" novalidate>
-                <div class="field-grid">
-                    <label class="field">
-                        <span>이름</span>
-                        <input id="name" name="name" type="text" autocomplete="name" placeholder="이름을 입력하세요">
-                    </label>
+        <form id="participantForm" novalidate>
+          <div class="field-grid">
+            <label class="field">
+              <span>이름</span>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                autocomplete="name"
+                placeholder="이름을 입력하세요"
+              />
+            </label>
 
-                    <label class="field">
-                        <span>나이</span>
-                        <input id="age" name="age" type="number" inputmode="numeric" min="1" max="120" placeholder="나이를 입력하세요">
-                    </label>
-                </div>
+            <label class="field">
+              <span>나이</span>
+              <input
+                id="age"
+                name="age"
+                type="number"
+                inputmode="numeric"
+                min="1"
+                max="120"
+                placeholder="나이를 입력하세요"
+              />
+            </label>
+          </div>
 
-                <fieldset class="choice-group">
-                    <legend>학력</legend>
-                    <div class="segmented-control">
-                        <input type="radio" id="edu-elementary" name="education" value="초졸">
-                        <label for="edu-elementary">초졸</label>
-                        <input type="radio" id="edu-middle" name="education" value="중졸">
-                        <label for="edu-middle">중졸</label>
-                        <input type="radio" id="edu-high" name="education" value="고졸">
-                        <label for="edu-high">고졸</label>
-                        <input type="radio" id="edu-college" name="education" value="대졸">
-                        <label for="edu-college">대졸</label>
-                        <input type="radio" id="edu-master" name="education" value="석사">
-                        <label for="edu-master">석사</label>
-                        <input type="radio" id="edu-doctor" name="education" value="박사">
-                        <label for="edu-doctor">박사</label>
-                    </div>
-                </fieldset>
+          <fieldset class="choice-group">
+            <legend>학력</legend>
+            <div class="segmented-control">
+              <input
+                type="radio"
+                id="edu-elementary"
+                name="education"
+                value="초졸"
+              />
+              <label for="edu-elementary">초졸</label>
+              <input
+                type="radio"
+                id="edu-middle"
+                name="education"
+                value="중졸"
+              />
+              <label for="edu-middle">중졸</label>
+              <input type="radio" id="edu-high" name="education" value="고졸" />
+              <label for="edu-high">고졸</label>
+              <input
+                type="radio"
+                id="edu-college"
+                name="education"
+                value="대졸"
+              />
+              <label for="edu-college">대졸</label>
+              <input
+                type="radio"
+                id="edu-master"
+                name="education"
+                value="석사"
+              />
+              <label for="edu-master">석사</label>
+              <input
+                type="radio"
+                id="edu-doctor"
+                name="education"
+                value="박사"
+              />
+              <label for="edu-doctor">박사</label>
+            </div>
+          </fieldset>
 
-                <fieldset class="choice-group">
-                    <legend>시각화 지식</legend>
-                    <div class="segmented-control compact">
-                        <input type="radio" id="viz-none" name="visualization" value="없음">
-                        <label for="viz-none">없음</label>
-                        <input type="radio" id="viz-little" name="visualization" value="조금 있음">
-                        <label for="viz-little">조금 있음</label>
-                        <input type="radio" id="viz-yes" name="visualization" value="있음">
-                        <label for="viz-yes">있음</label>
-                    </div>
-                </fieldset>
+          <fieldset class="choice-group">
+            <legend>시각화 지식</legend>
+            <div class="segmented-control compact">
+              <input
+                type="radio"
+                id="viz-none"
+                name="visualization"
+                value="없음"
+              />
+              <label for="viz-none">없음</label>
+              <input
+                type="radio"
+                id="viz-little"
+                name="visualization"
+                value="조금 있음"
+              />
+              <label for="viz-little">조금 있음</label>
+              <input
+                type="radio"
+                id="viz-yes"
+                name="visualization"
+                value="있음"
+              />
+              <label for="viz-yes">있음</label>
+            </div>
+          </fieldset>
 
-                <button class="primary-button hidden" id="nextButton" type="button">Next</button>
-            </form>
-        </section>
+          <button class="primary-button hidden" id="nextButton" type="button">
+            다음으로
+          </button>
+        </form>
+      </section>
     </main>
 
     <script>
-        const form = document.getElementById('participantForm');
-        const nextButton = document.getElementById('nextButton');
-        const requiredFields = ['name', 'age', 'education', 'visualization'];
+      const form = document.getElementById("participantForm");
+      const nextButton = document.getElementById("nextButton");
+      const requiredFields = ["name", "age", "education", "visualization"];
 
-        function isFormComplete() {
-            const formData = new FormData(form);
-            return requiredFields.every((field) => {
-                const value = formData.get(field);
-                return value && String(value).trim().length > 0;
-            });
-        }
-
-        function updateNextButton() {
-            nextButton.classList.toggle('hidden', !isFormComplete());
-        }
-
-        form.addEventListener('input', updateNextButton);
-        form.addEventListener('change', updateNextButton);
-
-        nextButton.addEventListener('click', () => {
-            if (isFormComplete()) {
-                window.location.href = 'train.html';
-            }
+      function isFormComplete() {
+        const formData = new FormData(form);
+        return requiredFields.every((field) => {
+          const value = formData.get(field);
+          return value && String(value).trim().length > 0;
         });
+      }
+
+      function updateNextButton() {
+        nextButton.classList.toggle("hidden", !isFormComplete());
+      }
+
+      form.addEventListener("input", updateNextButton);
+      form.addEventListener("change", updateNextButton);
+
+      nextButton.addEventListener("click", () => {
+        if (isFormComplete()) {
+          window.location.href = "train.html";
+        }
+      });
     </script>
-</body>
+  </body>
 </html>
