@@ -425,7 +425,7 @@ h1 {
     font-weight: 800;
 }
 
-.number-preview span {
+.number-preview > span {
     min-width: 48px;
     padding: 8px 10px;
     border: 2px solid transparent;
@@ -447,7 +447,7 @@ h1 {
     justify-content: center;
     gap: 16px;
     padding: 10px 14px;
-    border: 2px solid transparent;
+    border: 2px solid var(--line);
     border-radius: 8px;
     background: #ffffff;
 }
