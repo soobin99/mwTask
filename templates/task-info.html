@@ -1,53 +1,72 @@
-﻿<!DOCTYPE html>
+﻿<!doctype html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>과제 안내</title>
-    <link rel="stylesheet" href="../static/js/styles.css">
-</head>
-<body>
+    <link rel="stylesheet" href="../static/js/styles.css" />
+  </head>
+  <body>
     <main class="page-shell">
-        <section class="content-panel menu-panel">
-            <p class="eyebrow">Task Guide</p>
-            <h1 id="taskTitle" onclick="revealSkipButton('skipTaskButton')">다음 과제 안내</h1>
-            <p id="taskDescription" class="lead"></p>
-            <div id="taskPreview" class="task-guide-preview"></div>
-            <p class="lead compact-lead">준비가 됐다면 다음으로를 눌러주세요.</p>
-            <button class="primary-button" type="button" onclick="startCurrentTask()">다음으로</button>
-            <button id="skipTaskButton" class="menu-button secondary inline-action hidden" type="button" onclick="skipCurrentTask()">건너뛰기</button>
-        </section>
+      <section class="content-panel menu-panel">
+        <p class="eyebrow" onclick="revealSkipButton('skipTaskButton')">
+          Task Guide
+        </p>
+        <h1 id="taskTitle">다음 과제 안내</h1>
+        <p id="taskDescription" class="lead"></p>
+        <div id="taskPreview" class="task-guide-preview"></div>
+        <p class="lead compact-lead">준비가 됐다면 다음으로를 눌러주세요.</p>
+        <button
+          class="primary-button"
+          type="button"
+          onclick="startCurrentTask()"
+        >
+          다음으로
+        </button>
+        <button
+          id="skipTaskButton"
+          class="menu-button secondary inline-action hidden"
+          type="button"
+          onclick="skipCurrentTask()"
+        >
+          건너뛰기
+        </button>
+      </section>
     </main>
 
     <script src="../static/js/taskFlow.js"></script>
     <script>
-        const order = getTaskOrder();
-        const task = order[getTaskIndex()];
-        const preview = document.getElementById('taskPreview');
+      const order = getTaskOrder();
+      const task = order[getTaskIndex()];
+      const preview = document.getElementById("taskPreview");
 
-        document.getElementById('taskTitle').textContent = `다음으로 수행할 과제는 ${task.title}입니다.`;
-        document.getElementById('taskDescription').textContent = task.description;
+      document.getElementById("taskTitle").textContent =
+        `다음으로 수행할 과제는 ${task.title}입니다.`;
+      document.getElementById("taskDescription").textContent = task.description;
 
-        if (task.previewType === 'images') {
-            preview.className = 'task-guide-preview training-sequence';
-            task.preview.forEach((imageNumber, index) => {
-                const image = document.createElement('img');
-                image.src = `../static/data/nBackImage/${imageNumber}.svg`;
-                image.alt = `${task.title} 예시 이미지 ${index + 1}`;
-                if (task.highlights.includes(index)) {
-                    image.className = 'highlight-frame';
-                }
-                preview.appendChild(image);
-            });
-        } else {
-            preview.className = 'task-guide-preview number-preview vertical-preview';
-            task.preview.forEach((pair, index) => {
-                const pairBox = document.createElement('div');
-                pairBox.className = task.highlights.includes(index) ? 'pair-box highlight-frame' : 'pair-box';
-                pairBox.innerHTML = `<span>${pair[0]}</span><span>${pair[1]}</span>`;
-                preview.appendChild(pairBox);
-            });
-        }
+      if (task.previewType === "images") {
+        preview.className = "task-guide-preview training-sequence";
+        task.preview.forEach((imageNumber, index) => {
+          const image = document.createElement("img");
+          image.src = `../static/data/nBackImage/${imageNumber}.svg`;
+          image.alt = `${task.title} 예시 이미지 ${index + 1}`;
+          if (task.highlights.includes(index)) {
+            image.className = "highlight-frame";
+          }
+          preview.appendChild(image);
+        });
+      } else {
+        preview.className =
+          "task-guide-preview number-preview vertical-preview";
+        task.preview.forEach((pair, index) => {
+          const pairBox = document.createElement("div");
+          pairBox.className = task.highlights.includes(index)
+            ? "pair-box highlight-frame"
+            : "pair-box";
+          pairBox.innerHTML = `<span>${pair[0]}</span><span>${pair[1]}</span>`;
+          preview.appendChild(pairBox);
+        });
+      }
     </script>
-</body>
+  </body>
 </html>
