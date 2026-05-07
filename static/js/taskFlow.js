@@ -127,24 +127,6 @@ function formatTimestamp(date) {
 
 function downloadTaskCsv(taskName, rows, tlxScores) {
     var csv = 'section,cnt,stimulus,userAns,ansCheck,startTime,endTime,responseTime,accuracy,question,score\r\n';
-    var answeredRows = rows.filter(function(row) {
-        return row.ansCheck === 1;
-    });
-    var correctRows = rows.filter(function(row) {
-        return row.accuracy === 1;
-    });
-    var averageResponseTime = answeredRows.length
-        ? Math.round(answeredRows.reduce(function(sum, row) {
-            return sum + Number(row.responseTime || 0);
-        }, 0) / answeredRows.length)
-        : 0;
-    var accuracyRate = rows.length
-        ? Math.round((correctRows.length / rows.length) * 10000) / 100
-        : 0;
-
-    csv += ['summary', '', '', '', '', '', '', averageResponseTime, accuracyRate, 'answeredCount', answeredRows.length].join(',') + '\r\n';
-    csv += ['summary', '', '', '', '', '', '', '', '', 'totalCount', rows.length].join(',') + '\r\n';
-
     rows.forEach(function(row) {
         csv += [
             'trial',

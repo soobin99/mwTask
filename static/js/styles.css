@@ -530,35 +530,30 @@ h1 {
     font-weight: 800;
 }
 
-.tlx-scale {
+.tlx-slider-row {
     display: grid;
-    grid-template-columns: repeat(7, minmax(0, 1fr));
-    gap: 8px;
+    grid-template-columns: minmax(0, 1fr) 64px;
+    gap: 16px;
+    align-items: center;
     margin-top: 12px;
 }
 
-.tlx-scale input {
-    position: absolute;
-    opacity: 0;
-    pointer-events: none;
+.tlx-slider-row input[type="range"] {
+    width: 100%;
+    accent-color: var(--accent);
 }
 
-.tlx-scale label {
-    min-height: 40px;
+.tlx-slider-row output {
+    min-height: 42px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     border: 1px solid var(--line);
     border-radius: 8px;
     background: #ffffff;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-.tlx-scale input:checked + label {
-    border-color: var(--accent);
-    background: var(--accent);
-    color: #ffffff;
+    color: var(--text);
+    font-size: 18px;
+    font-weight: 800;
 }
 
 .vlat-panel {
@@ -679,8 +674,8 @@ h1 {
         text-align: center;
     }
 
-    .tlx-scale {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+    .tlx-slider-row {
+        grid-template-columns: 1fr;
     }
 
     .vlat-layout {
