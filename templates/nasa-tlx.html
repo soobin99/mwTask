@@ -78,7 +78,11 @@
 
         actionButton.addEventListener('click', () => {
             if (actionButton.dataset.state === 'next') {
-                if (sessionStorage.getItem('currentFlow') === 'vlat') {
+                if (sessionStorage.getItem('vlatNextPath')) {
+                    advanceVlatAfterTlx();
+                } else if (sessionStorage.getItem('svNextPath')) {
+                    advanceSvAfterTlx();
+                } else if (sessionStorage.getItem('currentFlow') === 'vlat') {
                     advanceVlatAfterTlx();
                 } else if (sessionStorage.getItem('currentFlow') === 'sv') {
                     advanceSvAfterTlx();

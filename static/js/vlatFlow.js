@@ -142,7 +142,6 @@ function saveVlatTlx(tlxScores) {
 
     if (nextIndex >= tasks.length) {
         downloadVlatCsv(results);
-        sessionStorage.removeItem('currentFlow');
         sessionStorage.setItem('vlatNextPath', completeVisualizationSet());
     } else {
         sessionStorage.setItem('vlatNextPath', 'vlat-task.html');
@@ -155,14 +154,15 @@ function isLastVlatTask() {
 
 function continueVlatAfterTlx(tlxScores) {
     saveVlatTlx(tlxScores);
-    if (!isLastVlatTask()) {
-        advanceVlatAfterTlx();
-    }
+    advanceVlatAfterTlx();
 }
 
 function advanceVlatAfterTlx() {
     var nextPath = sessionStorage.getItem('vlatNextPath') || 'vlat-task.html';
     sessionStorage.removeItem('vlatNextPath');
+    if (nextPath !== 'vlat-task.html') {
+        sessionStorage.removeItem('currentFlow');
+    }
     window.location.href = nextPath;
 }
 

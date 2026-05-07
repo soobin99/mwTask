@@ -73,7 +73,6 @@ function saveSvTlx(tlxScores) {
 
     if (nextIndex >= tasks.length) {
         downloadSvCsv(results);
-        sessionStorage.removeItem('currentFlow');
         sessionStorage.setItem('svNextPath', completeVisualizationSet());
     } else {
         sessionStorage.setItem('svNextPath', 'sv-task.html');
@@ -82,14 +81,15 @@ function saveSvTlx(tlxScores) {
 
 function continueSvAfterTlx(tlxScores) {
     saveSvTlx(tlxScores);
-    if (!isLastSvTask()) {
-        advanceSvAfterTlx();
-    }
+    advanceSvAfterTlx();
 }
 
 function advanceSvAfterTlx() {
     var nextPath = sessionStorage.getItem('svNextPath') || 'sv-task.html';
     sessionStorage.removeItem('svNextPath');
+    if (nextPath !== 'sv-task.html') {
+        sessionStorage.removeItem('currentFlow');
+    }
     window.location.href = nextPath;
 }
 
