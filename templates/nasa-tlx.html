@@ -15,7 +15,7 @@
 
             <form id="tlxForm">
                 <div id="tlxQuestions" class="tlx-list"></div>
-                <button id="tlxActionButton" class="primary-button hidden" type="button" data-state="submit">제출하기</button>
+                <button id="tlxActionButton" class="primary-button" type="button" data-state="submit">제출하기</button>
             </form>
         </section>
     </main>
@@ -34,6 +34,13 @@
         const result = JSON.parse(sessionStorage.getItem('currentTaskResult') || 'null');
         const questionsEl = document.getElementById('tlxQuestions');
         const actionButton = document.getElementById('tlxActionButton');
+        const isVlatFlow = sessionStorage.getItem('currentFlow') === 'vlat';
+        const isLastVlat = isVlatFlow && isLastVlatTask();
+
+        if (isVlatFlow && !isLastVlat) {
+            actionButton.textContent = '다음으로';
+            actionButton.dataset.state = 'vlat-next';
+        }
 
         questions.forEach((question, questionIndex) => {
             const group = document.createElement('fieldset');
@@ -42,7 +49,7 @@
 
             const choices = document.createElement('label');
             choices.className = 'tlx-select-row';
-            const options = ['<option value="">점수 선택</option>'];
+            const options = [];
             for (let score = 0; score <= 100; score += 5) {
                 options.push(`<option value="${score}">${score}</option>`);
             }
@@ -73,6 +80,15 @@
                 } else {
                     advanceToNextTask();
                 }
+                return;
+            }
+
+            if (actionButton.dataset.state === 'vlat-next') {
+                const scores = questions.map((question, index) => ({
+                    question: question.key,
+                    score: document.querySelector(`select[name="q${index}"]`).value
+                }));
+                continueVlatAfterTlx(scores);
                 return;
             }
 

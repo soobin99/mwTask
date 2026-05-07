@@ -144,6 +144,17 @@ function saveVlatTlx(tlxScores) {
     }
 }
 
+function isLastVlatTask() {
+    return getVlatIndex() >= getVlatTasks().length - 1;
+}
+
+function continueVlatAfterTlx(tlxScores) {
+    saveVlatTlx(tlxScores);
+    if (!isLastVlatTask()) {
+        advanceVlatAfterTlx();
+    }
+}
+
 function advanceVlatAfterTlx() {
     var nextPath = sessionStorage.getItem('vlatNextPath') || 'vlat-task.html';
     sessionStorage.removeItem('vlatNextPath');

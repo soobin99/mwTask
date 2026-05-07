@@ -102,6 +102,13 @@ function startCurrentTask() {
     window.location.href = order[index].path;
 }
 
+function skipCurrentTask() {
+    var nextIndex = getTaskIndex() + 1;
+    sessionStorage.setItem('taskIndex', String(nextIndex));
+    sessionStorage.removeItem('currentTaskResult');
+    goToCurrentTask();
+}
+
 function completeTask(taskName, rows) {
     sessionStorage.setItem('currentTaskResult', JSON.stringify({
         taskName: taskName,
