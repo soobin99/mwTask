@@ -1,4 +1,4 @@
-﻿count,visualization,task,right answer,vis name,task,ans cnt,1,2,3,4
+﻿count,visualization,task,right answer,vis name,task,ans cnt,ans1,ans2,ans3,ans4
 1,LineChart,1,3,2015년 월간 유가 역사,2월 석유의 가격을 고르시오.,4,57.36(달러),47.82(달러),50.24(달러),39.72(달러)
 2,LineChart,2,4,2015년 월간 유가 역사,석유 가격이 가장 낮은 달을 고르시오.,4,3월,5월,7월,12월
 3,LineChart,3,4,2015년 월간 유가 역사,석유의 가격 범위를 고르시오.,4,35 - 65 (달러),48.36 - 60.95 (달러),37.04 - 48.36 (달러),37.04 - 60.95 (달러)
