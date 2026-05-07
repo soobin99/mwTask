@@ -113,6 +113,7 @@ function completeVlatTask(task, selectedAnswer, startTime) {
         visualization: getVlatImageFile(task),
         startTime: startTime,
         responseTime: endTime - startTime,
+        answer: selectedAnswer,
         accuracy: isCorrect
     }));
     window.location.href = 'nasa-tlx.html';
@@ -176,17 +177,18 @@ function escapeCsvValue(value) {
 
 function downloadVlatCsv(results) {
     var header = [
-        'task번호',
-        '시각화 이미지 파일 이름',
-        '시작시간',
-        '소요시간',
-        '정답여부',
-        'tlx항목1점수',
-        'tlx항목2점수',
-        'tlx항목3점수',
-        'tlx항목4점수',
-        'tlx항목5점수',
-        'tlx항목6점수'
+        'taskID',
+        'chartType',
+        'start',
+        'time',
+        'ans',
+        'acc',
+        'mental',
+        'physical',
+        'temporal',
+        'performance',
+        'frustration',
+        'effort'
     ];
     var csv = header.join(',') + '\r\n';
 
@@ -196,6 +198,7 @@ function downloadVlatCsv(results) {
             result.visualization,
             result.startTime,
             result.responseTime,
+            result.answer,
             result.accuracy
         ].concat(result.tlx || []);
         csv += row.map(escapeCsvValue).join(',') + '\r\n';
