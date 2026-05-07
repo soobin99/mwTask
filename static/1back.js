@@ -1,4 +1,4 @@
-var maxCnt = 100;
+var maxCnt = TASK_CONFIG.maxCnt;
 var imageSequence = [];
 var userAns = [];
 var ansCheck = [];
