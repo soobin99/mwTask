@@ -23,8 +23,10 @@ function changeImage() {
     endTime.push(0);
     if (imageSequence.length <= 1) {
         hideAnswerButtons();
+        resetTrainFeedback();
     } else {
         showAnswerButtons();
+        showTrainTarget(isTarget(imageSequence.length - 1));
     }
     sequenceIndex += 1;
     setTimeout(hideImage, 500);
@@ -48,7 +50,6 @@ function userAnsCheck(isCorrectAnswer) {
     userAns[index] = isAnswerCorrect ? 1 : -1;
     ansCheck[index] = 1;
     endTime[index] = Date.now();
-    showTrainFeedback(isAnswerCorrect);
 }
 
 $(document).ready(function() {

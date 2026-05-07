@@ -24,6 +24,7 @@ function changeNum() {
     startTime.push(Date.now());
     endTime.push(0);
     showAnswerButtons();
+    showTrainTarget(isTarget(numberSequence.length - 1));
     pairIndex += 1;
     setTimeout(hideNum, 500);
     setTimeout(function() {
@@ -46,7 +47,6 @@ function userAnsCheck(isCorrectAnswer) {
     userAns[index] = isAnswerCorrect ? 1 : -1;
     ansCheck[index] = 1;
     endTime[index] = Date.now();
-    showTrainFeedback(isAnswerCorrect);
 }
 
 $(document).ready(function() {

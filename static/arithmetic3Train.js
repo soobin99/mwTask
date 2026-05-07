@@ -25,8 +25,10 @@ function changeNum() {
     endTime.push(0);
     if (numberSequence.length <= 2) {
         hideAnswerButtons();
+        resetTrainFeedback();
     } else {
         showAnswerButtons();
+        showTrainTarget(isTarget(numberSequence.length - 1));
     }
     pairIndex += 1;
     setTimeout(hideNum, 500);
@@ -50,7 +52,6 @@ function userAnsCheck(isCorrectAnswer) {
     userAns[index] = isAnswerCorrect ? 1 : -1;
     ansCheck[index] = 1;
     endTime[index] = Date.now();
-    showTrainFeedback(isAnswerCorrect);
 }
 
 $(document).ready(function() {

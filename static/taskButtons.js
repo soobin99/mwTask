@@ -38,3 +38,12 @@ function showTrainFeedback(isAnswerCorrect) {
 function resetTrainFeedback() {
     $('#trainFeedback').removeClass('correct incorrect').text('');
 }
+
+function showTrainTarget(isTargetTrial) {
+    var feedback = $('#trainFeedback');
+    if (!feedback.length) return;
+    feedback
+        .removeClass('correct incorrect')
+        .addClass(isTargetTrial ? 'correct' : 'incorrect')
+        .text(isTargetTrial ? '정답입니다' : '정답이 아닙니다');
+}
