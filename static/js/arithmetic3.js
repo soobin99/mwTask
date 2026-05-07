@@ -83,6 +83,11 @@ function changeNum() {
     ansCheck.push(0);
     startTime.push(Date.now());
     endTime.push(0);
+    if (numberSequence.length <= 2) {
+        hideAnswerButtons();
+    } else {
+        showAnswerButtons();
+    }
     setTimeout(hideNum, 500);
     setTimeout(function() {
         if (numberSequence.length < maxCnt) {
@@ -102,7 +107,7 @@ function hideNum() {
 
 function userAnsCheck(isCorrectAnswer) {
     var index = numberSequence.length - 1;
-    if (index < 0) return;
+    if (index < 2) return;
     userAns[index] = isCorrectAnswer === isTarget(index) ? 1 : -1;
     ansCheck[index] = 1;
     endTime[index] = Date.now();
@@ -116,7 +121,6 @@ $(document).ready(function() {
     $('#num2').text(num2.toString());
     setTimeout(function() {
         $('#description').css({'fontSize': '20px', 'margin-top': '0'});
-        showAnswerButtons();
         changeNum();
     }, 3000);
 });

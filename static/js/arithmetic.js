@@ -56,6 +56,7 @@ function changeNum() {
     ansCheck.push(0);
     startTime.push(Date.now());
     endTime.push(0);
+    showAnswerButtons();
     setTimeout(hideNum, 500);
     setTimeout(function() {
         if (numberSequence.length < maxCnt) {
@@ -130,7 +131,6 @@ $(document).ready(function() {
     $('#num2').text(num2.toString());
     setTimeout(function() {
         $('#description').css({'fontSize': '20px', 'margin-top': '0'});
-        showAnswerButtons();
         changeNum();
     }, 3000);
 });

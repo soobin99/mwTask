@@ -45,6 +45,11 @@ function changeImage() {
     ansCheck.push(0);
     startTime.push(Date.now());
     endTime.push(0);
+    if (imageSequence.length <= 3) {
+        hideAnswerButtons();
+    } else {
+        showAnswerButtons();
+    }
     setTimeout(hideImage, 500);
     setTimeout(function() {
         if (imageSequence.length < maxCnt) {
@@ -63,7 +68,7 @@ function hideImage() {
 
 function userAnsCheck(isCorrectAnswer) {
     var index = imageSequence.length - 1;
-    if (index < 0) return;
+    if (index < 3) return;
     userAns[index] = isCorrectAnswer === isTarget(index) ? 1 : -1;
     ansCheck[index] = 1;
     endTime[index] = Date.now();
@@ -115,7 +120,6 @@ $(document).ready(function() {
     hideAnswerButtons();
     setTimeout(function() {
         $('#description').css({'fontSize': '20px', 'margin-top': '0'});
-        showAnswerButtons();
         changeImage();
     }, 3000);
 });
