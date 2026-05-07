@@ -10,10 +10,14 @@
     <main class="page-shell">
         <section class="content-panel task-panel">
             <div class="training-info">
-                <div class="number-preview"><span>9</span><span>11</span></div>
+                <div class="number-preview">
+                    <span class="highlight-frame">4</span><span class="highlight-frame">5</span>
+                    <span class="group-divider">/</span>
+                    <span class="highlight-frame">6</span><span class="highlight-frame">5</span>
+                </div>
                 <div>
                     <h2>Arithmetic 2-frame Train 안내</h2>
-                    <p>전 숫자 쌍의 합과 현재 숫자 쌍의 합을 더해 20인지 판단합니다. 20이면 “정답입니다”, 아니면 “정답이 아닙니다”를 선택해 주세요.</p>
+                    <p>전 숫자 2개와 현재 숫자 2개, 총 4개의 합이 20인지 판단합니다. 20이면 “정답입니다”, 아니면 “정답이 아닙니다”를 선택해 주세요.</p>
                 </div>
             </div>
             <h1 class="task-title">Arithmetic 2-frame Train</h1>
@@ -21,6 +25,7 @@
                 숫자는 0.5초 동안 표시된 뒤 2.5초 동안 사라집니다.<br>
                 이전 숫자들과 현재 숫자들의 합이 20이면 “정답입니다”를, 아니면 “정답이 아닙니다”를 선택해 주세요.
             </div>
+            <div id="trainFeedback" class="train-feedback"></div>
             <div class="answer-actions">
                 <button id="correctAnsButton" class="answer-button" type="button" onclick="submitAnswer(true)">정답입니다</button>
                 <button id="incorrectAnsButton" class="answer-button" type="button" onclick="submitAnswer(false)">정답이 아닙니다</button>

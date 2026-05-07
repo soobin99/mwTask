@@ -25,3 +25,16 @@ function submitAnswer(isCorrectAnswer) {
         markAnswerButton(isCorrectAnswer);
     }
 }
+
+function showTrainFeedback(isAnswerCorrect) {
+    var feedback = $('#trainFeedback');
+    if (!feedback.length) return;
+    feedback
+        .removeClass('correct incorrect')
+        .addClass(isAnswerCorrect ? 'correct' : 'incorrect')
+        .text(isAnswerCorrect ? '정답입니다' : '정답이 아닙니다');
+}
+
+function resetTrainFeedback() {
+    $('#trainFeedback').removeClass('correct incorrect').text('');
+}

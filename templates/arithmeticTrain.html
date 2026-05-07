@@ -10,10 +10,10 @@
     <main class="page-shell">
         <section class="content-panel task-panel">
             <div class="training-info">
-                <div class="number-preview"><span>4</span><span>6</span></div>
+                <div class="number-preview"><span class="highlight-frame">4</span><span class="highlight-frame">6</span></div>
                 <div>
                     <h2>Arithmetic 1-frame Train 안내</h2>
-                    <p>현재 표시된 두 숫자의 합이 10인지 판단합니다. 10이면 “정답입니다”, 아니면 “정답이 아닙니다”를 선택해 주세요.</p>
+                    <p>두 숫자의 합이 10인지 판단합니다. 10이면 “정답입니다”, 아니면 “정답이 아닙니다”를 선택해 주세요.</p>
                 </div>
             </div>
             <h1 class="task-title">Arithmetic 1-frame Train</h1>
@@ -21,6 +21,7 @@
                 숫자는 0.5초 동안 표시된 뒤 2.5초 동안 사라집니다.<br>
                 현재 숫자들의 합이 10이면 “정답입니다”를, 아니면 “정답이 아닙니다”를 선택해 주세요.
             </div>
+            <div id="trainFeedback" class="train-feedback"></div>
             <div class="answer-actions">
                 <button id="correctAnsButton" class="answer-button" type="button" onclick="submitAnswer(true)">정답입니다</button>
                 <button id="incorrectAnsButton" class="answer-button" type="button" onclick="submitAnswer(false)">정답이 아닙니다</button>
