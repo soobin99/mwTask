@@ -449,6 +449,15 @@ h1 {
     font-size: 42px;
 }
 
+.number-preview.horizontal-preview {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 42px;
+}
+
 .number-preview .pair-box {
     min-width: 132px;
     display: flex;
@@ -478,6 +487,16 @@ h1 {
     border: 1px solid var(--line);
     border-radius: 8px;
     background: #fbfcfb;
+}
+
+.task-guide-preview .pair-box {
+    border-color: var(--line);
+    box-shadow: 0 0 0 1px rgba(29, 42, 36, 0.08);
+}
+
+.task-guide-preview .pair-box.highlight-frame {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(33, 122, 102, 0.12);
 }
 
 .number-preview .group-divider {
