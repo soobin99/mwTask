@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SV Task</title>
+    <link rel="stylesheet" href="../static/js/styles.css">
+</head>
+<body>
+    <main class="page-shell">
+        <section class="content-panel vlat-panel">
+            <p class="eyebrow" id="taskCount">SV TASK</p>
+            <h1 id="svTitle">공간 시각화 과제</h1>
+            <p class="lead" id="svQuestion"></p>
+
+            <div class="vlat-layout">
+                <img id="svImage" class="vlat-image" alt="SV visualization">
+                <div id="svChoices" class="vlat-choices"></div>
+            </div>
+
+            <button id="submitAnswerButton" class="primary-button hidden" type="button">제출</button>
+        </section>
+    </main>
+
+    <script src="../static/js/taskFlow.js"></script>
+    <script src="../static/data/SV/questions.js"></script>
+    <script src="../static/js/svFlow.js"></script>
+    <script>
+        const tasks = getSvTasks();
+        const index = getSvIndex();
+        const task = tasks[index];
+        let selectedAnswer = null;
+        const startTime = Date.now();
+
+        if (!task) {
+            window.location.href = 'End.html';
+        } else {
+            document.getElementById('taskCount').textContent = `SV TASK ${index + 1} / ${tasks.length}`;
+            document.getElementById('svTitle').textContent = task.isTraining ? 'Training' : `${task.level} - ${task.type}`;
+            document.getElementById('svQuestion').textContent = task.q;
+            document.getElementById('svImage').src = task.image;
+            document.getElementById('svChoices').innerHTML = task.options;
+        }
+
+        const choices = document.getElementById('svChoices');
+        const submitButton = document.getElementById('submitAnswerButton');
+
+        choices.querySelectorAll('input[type="radio"]').forEach((input) => {
+            input.name = 'svAnswer';
+            input.addEventListener('change', () => {
+                selectedAnswer = input.value;
+                submitButton.classList.remove('hidden');
+            });
+        });
+
+        submitButton.addEventListener('click', () => {
+            if (!selectedAnswer || !task) return;
+            completeSvTask(task, selectedAnswer, startTime);
+        });
+    </script>
+</body>
+</html>

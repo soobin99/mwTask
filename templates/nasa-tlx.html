@@ -22,6 +22,7 @@
 
     <script src="../static/js/taskFlow.js"></script>
     <script src="../static/js/vlatFlow.js"></script>
+    <script src="../static/js/svFlow.js"></script>
     <script>
         const questions = [
             {key: 'mental', label: '문제가 얼마나 어려웠습니까?'},
@@ -36,10 +37,12 @@
         const actionButton = document.getElementById('tlxActionButton');
         const isVlatFlow = sessionStorage.getItem('currentFlow') === 'vlat';
         const isLastVlat = isVlatFlow && isLastVlatTask();
+        const isSvFlow = sessionStorage.getItem('currentFlow') === 'sv';
+        const isLastSv = isSvFlow && isLastSvTask();
 
-        if (isVlatFlow && !isLastVlat) {
+        if ((isVlatFlow && !isLastVlat) || (isSvFlow && !isLastSv)) {
             actionButton.textContent = '다음으로';
-            actionButton.dataset.state = 'vlat-next';
+            actionButton.dataset.state = isSvFlow ? 'sv-next' : 'vlat-next';
         }
 
         questions.forEach((question, questionIndex) => {
@@ -77,9 +80,20 @@
             if (actionButton.dataset.state === 'next') {
                 if (sessionStorage.getItem('currentFlow') === 'vlat') {
                     advanceVlatAfterTlx();
+                } else if (sessionStorage.getItem('currentFlow') === 'sv') {
+                    advanceSvAfterTlx();
                 } else {
                     advanceToNextTask();
                 }
+                return;
+            }
+
+            if (actionButton.dataset.state === 'sv-next') {
+                const scores = questions.map((question, index) => ({
+                    question: question.key,
+                    score: document.querySelector(`select[name="q${index}"]`).value
+                }));
+                continueSvAfterTlx(scores);
                 return;
             }
 
@@ -99,6 +113,8 @@
             }));
             if (sessionStorage.getItem('currentFlow') === 'vlat') {
                 saveVlatTlx(scores);
+            } else if (sessionStorage.getItem('currentFlow') === 'sv') {
+                saveSvTlx(scores);
             } else {
                 if (!result) return;
                 downloadTaskCsv(result.taskName, result.rows, scores);
