@@ -86,7 +86,7 @@ function goToCurrentTask() {
     var order = getTaskOrder();
     var index = getTaskIndex();
     if (index >= order.length) {
-        window.location.href = 'visualizationInfo.html';
+        startVisualizationFlow();
         return;
     }
     window.location.href = 'task-info.html';
@@ -107,6 +107,65 @@ function skipCurrentTask() {
     sessionStorage.setItem('taskIndex', String(nextIndex));
     sessionStorage.removeItem('currentTaskResult');
     goToCurrentTask();
+}
+
+function startVisualizationFlow() {
+    if (!sessionStorage.getItem('visualizationOrder')) {
+        var order = shuffleTasks(['vlat', 'sv']);
+        sessionStorage.setItem('visualizationOrder', JSON.stringify(order));
+        sessionStorage.setItem('visualizationIndex', '0');
+    }
+    goToCurrentVisualizationInfo();
+}
+
+function getVisualizationOrder() {
+    var stored = sessionStorage.getItem('visualizationOrder');
+    return stored ? JSON.parse(stored) : ['vlat', 'sv'];
+}
+
+function getVisualizationIndex() {
+    return Number(sessionStorage.getItem('visualizationIndex') || '0');
+}
+
+function getVisualizationInfoPath(type) {
+    return type === 'sv' ? 'visualizationInfo2.html' : 'visualizationInfo.html';
+}
+
+function goToCurrentVisualizationInfo() {
+    var order = getVisualizationOrder();
+    var index = getVisualizationIndex();
+    if (index >= order.length) {
+        window.location.href = 'End.html';
+        return;
+    }
+    window.location.href = getVisualizationInfoPath(order[index]);
+}
+
+function completeVisualizationSet() {
+    var nextIndex = getVisualizationIndex() + 1;
+    sessionStorage.setItem('visualizationIndex', String(nextIndex));
+    var order = getVisualizationOrder();
+    if (nextIndex >= order.length) {
+        return 'End.html';
+    }
+    return getVisualizationInfoPath(order[nextIndex]);
+}
+
+function skipVisualizationSet(type) {
+    var order = getVisualizationOrder();
+    var index = getVisualizationIndex();
+    if (order[index] !== type) {
+        var foundIndex = order.indexOf(type);
+        if (foundIndex >= 0) {
+            sessionStorage.setItem('visualizationIndex', String(foundIndex));
+        }
+    }
+    window.location.href = completeVisualizationSet();
+}
+
+function revealSkipButton(buttonId) {
+    var button = document.getElementById(buttonId);
+    if (button) button.classList.remove('hidden');
 }
 
 function completeTask(taskName, rows) {

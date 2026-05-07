@@ -10,6 +10,10 @@ function shuffleSvTasks(tasks) {
 }
 
 function startSvFlow() {
+    if (!sessionStorage.getItem('visualizationOrder')) {
+        sessionStorage.setItem('visualizationOrder', JSON.stringify(['sv', 'vlat']));
+        sessionStorage.setItem('visualizationIndex', '0');
+    }
     var trainingTasks = (typeof Trainingsurvey !== 'undefined' ? Trainingsurvey : []).map(function(task) {
         return Object.assign({isTraining: true}, task);
     });
@@ -70,7 +74,7 @@ function saveSvTlx(tlxScores) {
     if (nextIndex >= tasks.length) {
         downloadSvCsv(results);
         sessionStorage.removeItem('currentFlow');
-        sessionStorage.setItem('svNextPath', 'End.html');
+        sessionStorage.setItem('svNextPath', completeVisualizationSet());
     } else {
         sessionStorage.setItem('svNextPath', 'sv-task.html');
     }

@@ -10,12 +10,12 @@
     <main class="page-shell">
         <section class="content-panel menu-panel">
             <p class="eyebrow">Task Guide</p>
-            <h1 id="taskTitle">다음 과제 안내</h1>
+            <h1 id="taskTitle" onclick="revealSkipButton('skipTaskButton')">다음 과제 안내</h1>
             <p id="taskDescription" class="lead"></p>
             <div id="taskPreview" class="task-guide-preview"></div>
             <p class="lead compact-lead">준비가 됐다면 다음으로를 눌러주세요.</p>
             <button class="primary-button" type="button" onclick="startCurrentTask()">다음으로</button>
-            <button class="menu-button secondary inline-action" type="button" onclick="skipCurrentTask()">건너뛰기</button>
+            <button id="skipTaskButton" class="menu-button secondary inline-action hidden" type="button" onclick="skipCurrentTask()">건너뛰기</button>
         </section>
     </main>
 

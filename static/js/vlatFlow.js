@@ -77,6 +77,10 @@ function shuffleVlatTasks(tasks) {
 }
 
 function startVlatFlow() {
+    if (!sessionStorage.getItem('visualizationOrder')) {
+        sessionStorage.setItem('visualizationOrder', JSON.stringify(['vlat', 'sv']));
+        sessionStorage.setItem('visualizationIndex', '0');
+    }
     loadVlatTasks().then(function(tasks) {
         sessionStorage.setItem('currentFlow', 'vlat');
         sessionStorage.setItem('vlatTasks', JSON.stringify(shuffleVlatTasks(tasks)));
@@ -139,7 +143,7 @@ function saveVlatTlx(tlxScores) {
     if (nextIndex >= tasks.length) {
         downloadVlatCsv(results);
         sessionStorage.removeItem('currentFlow');
-        sessionStorage.setItem('vlatNextPath', 'visualizationInfo2.html');
+        sessionStorage.setItem('vlatNextPath', completeVisualizationSet());
     } else {
         sessionStorage.setItem('vlatNextPath', 'vlat-task.html');
     }

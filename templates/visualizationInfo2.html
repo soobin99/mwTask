@@ -10,9 +10,10 @@
     <main class="page-shell">
         <section class="content-panel menu-panel">
             <p class="eyebrow">Visualization Task</p>
-            <h1>시각화 과제 2</h1>
+            <h1 onclick="revealSkipButton('skipVisualization2Button')">시각화 과제 2</h1>
             <p class="lead">세부 내용 추가 예정 - 다음 시각화 과제를 진행합니다.</p>
             <button class="primary-button" type="button" onclick="startSvFlow()">다음으로</button>
+            <button id="skipVisualization2Button" class="menu-button secondary inline-action hidden" type="button" onclick="skipVisualizationSet('sv')">건너뛰기</button>
         </section>
     </main>
     <script src="../static/js/taskFlow.js"></script>
