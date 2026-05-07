@@ -1,21 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>훈련 과제 선택</title>
+    <link rel="stylesheet" href="../static/styles.css">
 </head>
-<body style="text-align: center; font-size: 50px;">
-<div style="margin-top: 10%;"></div>
-<br>
-<button style="text-align: center; font-size: 50px; margin-top: 1%;"onclick="window.location.href='1BackTrain.html'">1-Back Train</button>
-<br>
-<button style="text-align: center; font-size: 50px; margin-top: 1%;"onclick="window.location.href='3BackTrain.html'">3-Back Train</button>
-<br>
-<button style="text-align: center; font-size: 50px; margin-top: 1%;"onclick="window.location.href='arithmeticTrain.html'">Arithmetic 1-frame Train</button>
-<br>
-<button style="text-align: center; font-size: 50px; margin-top: 1%;"onclick="window.location.href='arithmetic2Train.html'">Arithmetic 2-frame Train</button>
-<br>
-<button style="text-align: center; font-size: 50px; margin-top: 1%;"onclick="window.location.href='../index.html'">뒤로 가기</button>
-<br>
+<body>
+    <main class="page-shell">
+        <section class="content-panel menu-panel">
+            <p class="eyebrow">Training</p>
+            <h1>훈련 과제 선택</h1>
+            <p class="lead">진행할 훈련 과제를 선택해 주세요.</p>
+
+            <nav class="menu-grid" aria-label="훈련 과제 목록">
+                <a class="menu-button" href="1BackTrain.html">1-Back Train</a>
+                <a class="menu-button" href="3BackTrain.html">3-Back Train</a>
+                <a class="menu-button" href="arithmeticTrain.html">Arithmetic 1-frame Train</a>
+                <a class="menu-button" href="arithmetic2Train.html">Arithmetic 2-frame Train</a>
+                <a class="menu-button secondary" href="info.html">이전으로 가기</a>
+            </nav>
+        </section>
+    </main>
 </body>
 </html>
