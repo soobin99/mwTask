@@ -118,7 +118,7 @@ function completeVlatTask(task, selectedAnswer, startTime) {
     window.location.href = 'nasa-tlx.html';
 }
 
-function saveVlatTlxAndContinue(tlxScores) {
+function saveVlatTlx(tlxScores) {
     var result = JSON.parse(sessionStorage.getItem('currentVlatResult') || 'null');
     if (!result) return;
 
@@ -138,10 +138,21 @@ function saveVlatTlxAndContinue(tlxScores) {
     if (nextIndex >= tasks.length) {
         downloadVlatCsv(results);
         sessionStorage.removeItem('currentFlow');
-        window.location.href = 'visualizationInfo2.html';
+        sessionStorage.setItem('vlatNextPath', 'visualizationInfo2.html');
     } else {
-        window.location.href = 'vlat-task.html';
+        sessionStorage.setItem('vlatNextPath', 'vlat-task.html');
     }
+}
+
+function advanceVlatAfterTlx() {
+    var nextPath = sessionStorage.getItem('vlatNextPath') || 'vlat-task.html';
+    sessionStorage.removeItem('vlatNextPath');
+    window.location.href = nextPath;
+}
+
+function saveVlatTlxAndContinue(tlxScores) {
+    saveVlatTlx(tlxScores);
+    advanceVlatAfterTlx();
 }
 
 function escapeCsvValue(value) {

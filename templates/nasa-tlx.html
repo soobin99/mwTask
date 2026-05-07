@@ -15,8 +15,7 @@
 
             <form id="tlxForm">
                 <div id="tlxQuestions" class="tlx-list"></div>
-                <button id="submitTlxButton" class="primary-button hidden" type="button">제출</button>
-                <button id="nextTaskButton" class="primary-button hidden" type="button">다음으로</button>
+                <button id="tlxActionButton" class="primary-button hidden" type="button" data-state="submit">제출하기</button>
             </form>
         </section>
     </main>
@@ -34,8 +33,7 @@
         ];
         const result = JSON.parse(sessionStorage.getItem('currentTaskResult') || 'null');
         const questionsEl = document.getElementById('tlxQuestions');
-        const submitButton = document.getElementById('submitTlxButton');
-        const nextButton = document.getElementById('nextTaskButton');
+        const actionButton = document.getElementById('tlxActionButton');
 
         questions.forEach((question, questionIndex) => {
             const group = document.createElement('fieldset');
@@ -43,10 +41,15 @@
             group.innerHTML = `<legend>${question.label}</legend>`;
 
             const choices = document.createElement('label');
-            choices.className = 'tlx-slider-row';
+            choices.className = 'tlx-select-row';
+            const options = ['<option value="">점수 선택</option>'];
+            for (let score = 0; score <= 100; score += 5) {
+                options.push(`<option value="${score}">${score}</option>`);
+            }
             choices.innerHTML = `
-                <input type="range" name="q${questionIndex}" min="0" max="100" step="5" value="50" data-touched="false">
-                <output>50</output>
+                <select name="q${questionIndex}">
+                    ${options.join('')}
+                </select>
             `;
 
             group.appendChild(choices);
@@ -55,35 +58,39 @@
 
         function isComplete() {
             return questions.every((_, index) => {
-                return document.querySelector(`input[name="q${index}"]`).dataset.touched === 'true';
+                return document.querySelector(`select[name="q${index}"]`).value !== '';
             });
         }
 
-        document.getElementById('tlxForm').addEventListener('input', (event) => {
-            if (event.target.type === 'range') {
-                event.target.dataset.touched = 'true';
-                event.target.nextElementSibling.value = event.target.value;
-            }
-            submitButton.classList.toggle('hidden', !isComplete());
+        document.getElementById('tlxForm').addEventListener('change', () => {
+            actionButton.classList.toggle('hidden', !isComplete());
         });
 
-        submitButton.addEventListener('click', () => {
+        actionButton.addEventListener('click', () => {
+            if (actionButton.dataset.state === 'next') {
+                if (sessionStorage.getItem('currentFlow') === 'vlat') {
+                    advanceVlatAfterTlx();
+                } else {
+                    advanceToNextTask();
+                }
+                return;
+            }
+
             if (!isComplete()) return;
             const scores = questions.map((question, index) => ({
                 question: question.key,
-                score: document.querySelector(`input[name="q${index}"]`).value
+                score: document.querySelector(`select[name="q${index}"]`).value
             }));
             if (sessionStorage.getItem('currentFlow') === 'vlat') {
-                saveVlatTlxAndContinue(scores);
-                return;
+                saveVlatTlx(scores);
+            } else {
+                if (!result) return;
+                downloadTaskCsv(result.taskName, result.rows, scores);
             }
-            if (!result) return;
-            downloadTaskCsv(result.taskName, result.rows, scores);
-            submitButton.classList.add('hidden');
-            nextButton.classList.remove('hidden');
-        });
 
-        nextButton.addEventListener('click', advanceToNextTask);
+            actionButton.dataset.state = 'next';
+            actionButton.textContent = '다음으로';
+        });
     </script>
 </body>
 </html>
