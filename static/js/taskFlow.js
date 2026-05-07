@@ -1,229 +1,260 @@
 ﻿var TEST_TASKS = [
-    {
-        name: '1back',
-        title: '1-Back',
-        path: '1Back.html',
-        description: '두 이미지를 비교합니다. 현재 이미지가 바로 이전 이미지와 같으면 “정답입니다”, 다르면 “정답이 아닙니다”를 선택해 주세요.',
-        previewType: 'images',
-        preview: ['1', '1'],
-        highlights: [0, 1]
-    },
-    {
-        name: '2back',
-        title: '2-Back',
-        path: '2Back.html',
-        description: '세 이미지 중 첫 번째 이미지와 마지막 이미지를 비교합니다. 현재 이미지가 전전 이미지와 같으면 “정답입니다”, 다르면 “정답이 아닙니다”를 선택해 주세요.',
-        previewType: 'images',
-        preview: ['2', '5', '2'],
-        highlights: [0, 2]
-    },
-    {
-        name: '3back',
-        title: '3-Back',
-        path: '3Back.html',
-        description: '네 이미지 중 첫 번째 이미지와 마지막 이미지를 비교합니다. 현재 이미지가 3단계 이전 이미지와 같으면 “정답입니다”, 다르면 “정답이 아닙니다”를 선택해 주세요.',
-        previewType: 'images',
-        preview: ['3', '6', '8', '3'],
-        highlights: [0, 3]
-    },
-    {
-        name: 'arithmetic1',
-        title: 'Arithmetic 1-frame',
-        path: 'arithmetic.html',
-        description: '한 박스 안의 두 숫자 합이 10인지 판단합니다. 10이면 “정답입니다”, 아니면 “정답이 아닙니다”를 선택해 주세요.',
-        previewType: 'numbers',
-        preview: [[4, 6]],
-        highlights: [0]
-    },
-    {
-        name: 'arithmetic2',
-        title: 'Arithmetic 2-frame',
-        path: 'arithmetic2.html',
-        description: '두 박스의 숫자 4개 합이 20인지 판단합니다. 20이면 “정답입니다”, 아니면 “정답이 아닙니다”를 선택해 주세요.',
-        previewType: 'numbers',
-        preview: [[4, 5], [6, 5]],
-        highlights: [0, 1]
-    },
-    {
-        name: 'arithmetic3',
-        title: 'Arithmetic 3-frame',
-        path: 'arithmetic3.html',
-        description: '세 박스의 숫자 6개 합이 30인지 판단합니다. 30이면 “정답입니다”, 아니면 “정답이 아닙니다”를 선택해 주세요.',
-        previewType: 'numbers',
-        preview: [[4, 5], [6, 5], [5, 5]],
-        highlights: [0, 2]
-    }
+  {
+    name: "1back",
+    title: "1-Back",
+    path: "1Back.html",
+    description:
+      "두 이미지를 비교합니다.\n현재 이미지가 바로 이전 이미지와 같으면 “정답입니다”, 다르면 “정답이 아닙니다”를 선택해 주세요.",
+    previewType: "images",
+    preview: ["1", "1"],
+    highlights: [0, 1],
+  },
+  {
+    name: "2back",
+    title: "2-Back",
+    path: "2Back.html",
+    description:
+      "세 이미지 중 첫 번째 이미지와 마지막 이미지를 비교합니다.\n현재 이미지가 전전 이미지와 같으면 “정답입니다”, 다르면 “정답이 아닙니다”를 선택해 주세요.",
+    previewType: "images",
+    preview: ["2", "5", "2"],
+    highlights: [0, 2],
+  },
+  {
+    name: "3back",
+    title: "3-Back",
+    path: "3Back.html",
+    description:
+      "네 이미지 중 첫 번째 이미지와 마지막 이미지를 비교합니다.\n현재 이미지가 3단계 이전 이미지와 같으면 “정답입니다”, 다르면 “정답이 아닙니다”를 선택해 주세요.",
+    previewType: "images",
+    preview: ["3", "6", "8", "3"],
+    highlights: [0, 3],
+  },
+  {
+    name: "arithmetic1",
+    title: "Arithmetic 1-frame",
+    path: "arithmetic.html",
+    description:
+      "한 박스 안의 두 숫자 합이 10인지 판단합니다.\n10이면 “정답입니다”, 아니면 “정답이 아닙니다”를 선택해 주세요.",
+    previewType: "numbers",
+    preview: [[4, 6]],
+    highlights: [0],
+  },
+  {
+    name: "arithmetic2",
+    title: "Arithmetic 2-frame",
+    path: "arithmetic2.html",
+    description:
+      "두 박스의 숫자 4개 합이 20인지 판단합니다.\n20이면 “정답입니다”, 아니면 “정답이 아닙니다”를 선택해 주세요.",
+    previewType: "numbers",
+    preview: [
+      [4, 5],
+      [6, 5],
+    ],
+    highlights: [0, 1],
+  },
+  {
+    name: "arithmetic3",
+    title: "Arithmetic 3-frame",
+    path: "arithmetic3.html",
+    description:
+      "세 박스의 숫자 6개 합이 30인지 판단합니다.\n30이면 “정답입니다”, 아니면 “정답이 아닙니다”를 선택해 주세요.",
+    previewType: "numbers",
+    preview: [
+      [4, 5],
+      [6, 5],
+      [5, 5],
+    ],
+    highlights: [0, 2],
+  },
 ];
 
 function shuffleTasks(tasks) {
-    var shuffled = tasks.slice();
-    for (var i = shuffled.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var temp = shuffled[i];
-        shuffled[i] = shuffled[j];
-        shuffled[j] = temp;
-    }
-    return shuffled;
+  var shuffled = tasks.slice();
+  for (var i = shuffled.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var temp = shuffled[i];
+    shuffled[i] = shuffled[j];
+    shuffled[j] = temp;
+  }
+  return shuffled;
 }
 
 function startRandomTestFlow() {
-    sessionStorage.setItem('taskOrder', JSON.stringify(shuffleTasks(TEST_TASKS)));
-    sessionStorage.setItem('taskIndex', '0');
-    sessionStorage.removeItem('currentTaskResult');
-    goToCurrentTask();
+  sessionStorage.setItem("taskOrder", JSON.stringify(shuffleTasks(TEST_TASKS)));
+  sessionStorage.setItem("taskIndex", "0");
+  sessionStorage.removeItem("currentTaskResult");
+  goToCurrentTask();
 }
 
 function getTaskOrder() {
-    var stored = sessionStorage.getItem('taskOrder');
-    return stored ? JSON.parse(stored) : TEST_TASKS;
+  var stored = sessionStorage.getItem("taskOrder");
+  return stored ? JSON.parse(stored) : TEST_TASKS;
 }
 
 function getTaskIndex() {
-    return Number(sessionStorage.getItem('taskIndex') || '0');
+  return Number(sessionStorage.getItem("taskIndex") || "0");
 }
 
 function goToCurrentTask() {
-    var order = getTaskOrder();
-    var index = getTaskIndex();
-    if (index >= order.length) {
-        startVisualizationFlow();
-        return;
-    }
-    window.location.href = 'task-info.html';
+  var order = getTaskOrder();
+  var index = getTaskIndex();
+  if (index >= order.length) {
+    startVisualizationFlow();
+    return;
+  }
+  window.location.href = "task-info.html";
 }
 
 function startCurrentTask() {
-    var order = getTaskOrder();
-    var index = getTaskIndex();
-    if (index >= order.length) {
-        window.location.href = 'visualizationInfo.html';
-        return;
-    }
-    window.location.href = order[index].path;
+  var order = getTaskOrder();
+  var index = getTaskIndex();
+  if (index >= order.length) {
+    window.location.href = "visualizationInfo.html";
+    return;
+  }
+  window.location.href = order[index].path;
 }
 
 function skipCurrentTask() {
-    var nextIndex = getTaskIndex() + 1;
-    sessionStorage.setItem('taskIndex', String(nextIndex));
-    sessionStorage.removeItem('currentTaskResult');
-    goToCurrentTask();
+  var nextIndex = getTaskIndex() + 1;
+  sessionStorage.setItem("taskIndex", String(nextIndex));
+  sessionStorage.removeItem("currentTaskResult");
+  goToCurrentTask();
 }
 
 function startVisualizationFlow() {
-    if (!sessionStorage.getItem('visualizationOrder')) {
-        var order = shuffleTasks(['vlat', 'sv']);
-        sessionStorage.setItem('visualizationOrder', JSON.stringify(order));
-        sessionStorage.setItem('visualizationIndex', '0');
-    }
-    goToCurrentVisualizationInfo();
+  if (!sessionStorage.getItem("visualizationOrder")) {
+    var order = shuffleTasks(["vlat", "sv"]);
+    sessionStorage.setItem("visualizationOrder", JSON.stringify(order));
+    sessionStorage.setItem("visualizationIndex", "0");
+  }
+  goToCurrentVisualizationInfo();
 }
 
 function getVisualizationOrder() {
-    var stored = sessionStorage.getItem('visualizationOrder');
-    return stored ? JSON.parse(stored) : ['vlat', 'sv'];
+  var stored = sessionStorage.getItem("visualizationOrder");
+  return stored ? JSON.parse(stored) : ["vlat", "sv"];
 }
 
 function getVisualizationIndex() {
-    return Number(sessionStorage.getItem('visualizationIndex') || '0');
+  return Number(sessionStorage.getItem("visualizationIndex") || "0");
 }
 
 function getVisualizationInfoPath(type) {
-    return type === 'sv' ? 'visualizationInfo2.html' : 'visualizationInfo.html';
+  return type === "sv" ? "visualizationInfo2.html" : "visualizationInfo.html";
 }
 
 function goToCurrentVisualizationInfo() {
-    var order = getVisualizationOrder();
-    var index = getVisualizationIndex();
-    if (index >= order.length) {
-        window.location.href = 'End.html';
-        return;
-    }
-    window.location.href = getVisualizationInfoPath(order[index]);
+  var order = getVisualizationOrder();
+  var index = getVisualizationIndex();
+  if (index >= order.length) {
+    window.location.href = "End.html";
+    return;
+  }
+  window.location.href = getVisualizationInfoPath(order[index]);
 }
 
 function completeVisualizationSet() {
-    var nextIndex = getVisualizationIndex() + 1;
-    sessionStorage.setItem('visualizationIndex', String(nextIndex));
-    var order = getVisualizationOrder();
-    if (nextIndex >= order.length) {
-        return 'End.html';
-    }
-    return getVisualizationInfoPath(order[nextIndex]);
+  var nextIndex = getVisualizationIndex() + 1;
+  sessionStorage.setItem("visualizationIndex", String(nextIndex));
+  var order = getVisualizationOrder();
+  if (nextIndex >= order.length) {
+    return "End.html";
+  }
+  return getVisualizationInfoPath(order[nextIndex]);
 }
 
 function skipVisualizationSet(type) {
-    var order = getVisualizationOrder();
-    var index = getVisualizationIndex();
-    if (order[index] !== type) {
-        var foundIndex = order.indexOf(type);
-        if (foundIndex >= 0) {
-            sessionStorage.setItem('visualizationIndex', String(foundIndex));
-        }
+  var order = getVisualizationOrder();
+  var index = getVisualizationIndex();
+  if (order[index] !== type) {
+    var foundIndex = order.indexOf(type);
+    if (foundIndex >= 0) {
+      sessionStorage.setItem("visualizationIndex", String(foundIndex));
     }
-    window.location.href = completeVisualizationSet();
+  }
+  window.location.href = completeVisualizationSet();
 }
 
 function revealSkipButton(buttonId) {
-    var button = document.getElementById(buttonId);
-    if (button) button.classList.remove('hidden');
+  var button = document.getElementById(buttonId);
+  if (button) button.classList.remove("hidden");
 }
 
 function completeTask(taskName, rows) {
-    sessionStorage.setItem('currentTaskResult', JSON.stringify({
-        taskName: taskName,
-        rows: rows
-    }));
-    window.location.href = 'nasa-tlx.html';
+  sessionStorage.setItem(
+    "currentTaskResult",
+    JSON.stringify({
+      taskName: taskName,
+      rows: rows,
+    }),
+  );
+  window.location.href = "nasa-tlx.html";
 }
 
 function formatTimestamp(date) {
-    function pad(value) {
-        return String(value).padStart(2, '0');
-    }
-    return [
-        date.getFullYear(),
-        pad(date.getMonth() + 1),
-        pad(date.getDate())
-    ].join('') + '_' + [
-        pad(date.getHours()),
-        pad(date.getMinutes()),
-        pad(date.getSeconds())
-    ].join('');
+  function pad(value) {
+    return String(value).padStart(2, "0");
+  }
+  return (
+    [date.getFullYear(), pad(date.getMonth() + 1), pad(date.getDate())].join(
+      "",
+    ) +
+    "_" +
+    [pad(date.getHours()), pad(date.getMinutes()), pad(date.getSeconds())].join(
+      "",
+    )
+  );
 }
 
 function downloadTaskCsv(taskName, rows, tlxScores) {
-    var csv = 'section,cnt,stimulus,userAns,ansCheck,startTime,endTime,responseTime,accuracy,question,score\r\n';
-    rows.forEach(function(row) {
-        csv += [
-            'trial',
-            row.cnt,
-            row.stimulus,
-            row.userAns,
-            row.ansCheck,
-            row.startTime,
-            row.endTime,
-            row.responseTime,
-            row.accuracy,
-            '',
-            ''
-        ].join(',') + '\r\n';
-    });
-    tlxScores.forEach(function(item) {
-        csv += ['nasa-tlx', '', '', '', '', '', '', '', '', '"' + item.question.replace(/"/g, '""') + '"', item.score].join(',') + '\r\n';
-    });
+  var csv =
+    "section,cnt,stimulus,userAns,ansCheck,startTime,endTime,responseTime,accuracy,question,score\r\n";
+  rows.forEach(function (row) {
+    csv +=
+      [
+        "trial",
+        row.cnt,
+        row.stimulus,
+        row.userAns,
+        row.ansCheck,
+        row.startTime,
+        row.endTime,
+        row.responseTime,
+        row.accuracy,
+        "",
+        "",
+      ].join(",") + "\r\n";
+  });
+  tlxScores.forEach(function (item) {
+    csv +=
+      [
+        "nasa-tlx",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        '"' + item.question.replace(/"/g, '""') + '"',
+        item.score,
+      ].join(",") + "\r\n";
+  });
 
-    var downloadLink = document.createElement('a');
-    var blob = new Blob([csv], {type: 'text/csv;charset=utf-8'});
-    downloadLink.href = URL.createObjectURL(blob);
-    downloadLink.download = taskName + '_' + formatTimestamp(new Date()) + '.csv';
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
+  var downloadLink = document.createElement("a");
+  var blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+  downloadLink.href = URL.createObjectURL(blob);
+  downloadLink.download = taskName + "_" + formatTimestamp(new Date()) + ".csv";
+  document.body.appendChild(downloadLink);
+  downloadLink.click();
+  document.body.removeChild(downloadLink);
 }
 
 function advanceToNextTask() {
-    var nextIndex = getTaskIndex() + 1;
-    sessionStorage.setItem('taskIndex', String(nextIndex));
-    sessionStorage.removeItem('currentTaskResult');
-    goToCurrentTask();
+  var nextIndex = getTaskIndex() + 1;
+  sessionStorage.setItem("taskIndex", String(nextIndex));
+  sessionStorage.removeItem("currentTaskResult");
+  goToCurrentTask();
 }
