@@ -1,3 +1,3 @@
 ﻿var TASK_CONFIG = {
-  maxCnt: 10,
+  maxCnt: 100,
 };
