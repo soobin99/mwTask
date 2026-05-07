@@ -56,7 +56,7 @@ function userAnsCheck(isCorrectAnswer) {
 }
 
 $(document).ready(function() {
-    $('#nBackImage').hide();
+    $('#nBackImage').removeAttr('src').hide();
     hideAnswerButtons();
     setTimeout(function() {
         $('#description').css({'fontSize': '20px', 'margin-top': '0'});
