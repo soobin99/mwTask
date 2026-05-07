@@ -22,6 +22,7 @@
     </main>
 
     <script src="../static/js/taskFlow.js"></script>
+    <script src="../static/js/vlatFlow.js"></script>
     <script>
         const questions = [
             '문제가 얼마나 어려웠습니까?',
@@ -67,11 +68,16 @@
         });
 
         submitButton.addEventListener('click', () => {
-            if (!result || !isComplete()) return;
+            if (!isComplete()) return;
             const scores = questions.map((question, index) => ({
                 question,
                 score: document.querySelector(`input[name="q${index}"]:checked`).value
             }));
+            if (sessionStorage.getItem('currentFlow') === 'vlat') {
+                saveVlatTlxAndContinue(scores);
+                return;
+            }
+            if (!result) return;
             downloadTaskCsv(result.taskName, result.rows, scores);
             submitButton.classList.add('hidden');
             nextButton.classList.remove('hidden');

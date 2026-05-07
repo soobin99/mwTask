@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VLAT</title>
+    <link rel="stylesheet" href="../static/js/styles.css">
+</head>
+<body>
+    <main class="page-shell">
+        <section class="content-panel vlat-panel">
+            <p class="eyebrow" id="taskCount">VLAT</p>
+            <h1 id="visName">시각화 과제</h1>
+            <p class="lead" id="taskText"></p>
+
+            <div class="vlat-layout">
+                <img id="vlatImage" class="vlat-image" alt="VLAT visualization">
+                <div id="answerChoices" class="vlat-choices"></div>
+            </div>
+
+            <button id="submitAnswerButton" class="primary-button hidden" type="button">제출</button>
+        </section>
+    </main>
+
+    <script src="../static/js/taskFlow.js"></script>
+    <script src="../static/js/vlatFlow.js"></script>
+    <script>
+        const tasks = getVlatTasks();
+        const index = getVlatIndex();
+        const task = tasks[index];
+        let selectedAnswer = null;
+        const startTime = Date.now();
+
+        if (!task) {
+            window.location.href = 'visualizationInfo2.html';
+        } else {
+            document.getElementById('taskCount').textContent = `VLAT ${index + 1} / ${tasks.length}`;
+            document.getElementById('visName').textContent = task['vis name'];
+            document.getElementById('taskText').textContent = task.taskText;
+            document.getElementById('vlatImage').src = VLAT_IMAGE_BASE + getVlatImageFile(task);
+        }
+
+        const choices = document.getElementById('answerChoices');
+        const submitButton = document.getElementById('submitAnswerButton');
+
+        if (task) [1, 2, 3, 4].forEach((answerNumber) => {
+            const answerText = task[`ans${answerNumber}`];
+            if (!answerText) return;
+
+            const id = `answer-${answerNumber}`;
+            choices.insertAdjacentHTML('beforeend', `
+                <input type="radio" id="${id}" name="vlatAnswer" value="${answerNumber}">
+                <label for="${id}">${answerText}</label>
+            `);
+        });
+
+        choices.addEventListener('change', (event) => {
+            selectedAnswer = event.target.value;
+            submitButton.classList.remove('hidden');
+        });
+
+        submitButton.addEventListener('click', () => {
+            if (!selectedAnswer) return;
+            completeVlatTask(task, selectedAnswer, startTime);
+        });
+    </script>
+</body>
+</html>

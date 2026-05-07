@@ -561,6 +561,57 @@ h1 {
     color: #ffffff;
 }
 
+.vlat-panel {
+    max-width: 1120px;
+}
+
+.vlat-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+    gap: 28px;
+    align-items: start;
+}
+
+.vlat-image {
+    width: 100%;
+    max-height: 560px;
+    object-fit: contain;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #ffffff;
+    padding: 12px;
+}
+
+.vlat-choices {
+    display: grid;
+    gap: 10px;
+}
+
+.vlat-choices input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.vlat-choices label {
+    min-height: 54px;
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #ffffff;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.vlat-choices input:checked + label {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #ffffff;
+}
+
 @media (max-width: 720px) {
     .page-shell {
         width: min(100% - 24px, 980px);
@@ -630,5 +681,9 @@ h1 {
 
     .tlx-scale {
         grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .vlat-layout {
+        grid-template-columns: 1fr;
     }
 }
