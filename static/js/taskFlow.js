@@ -1,4 +1,4 @@
-var TEST_TASKS = [
+﻿var TEST_TASKS = [
     {
         name: '1back',
         title: '1-Back',

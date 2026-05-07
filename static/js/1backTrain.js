@@ -1,52 +1,50 @@
-var numberSequence = [];
+﻿var imageSequence = [];
 var userAns = [];
 var ansCheck = [];
 var startTime = [];
 var endTime = [];
-var pairs = [[4, 5], [6, 5], [3, 5]];
-var pairIndex = 0;
+var sequence = [1, 1, 2];
+var sequenceIndex = 0;
 
 function isTarget(index) {
-    return index > 0 && numberSequence[index] + numberSequence[index - 1] === 20;
+    return index > 0 && imageSequence[index] === imageSequence[index - 1];
 }
 
-function changeNum() {
-    if (pairIndex >= pairs.length) return;
+function changeImage() {
+    if (sequenceIndex >= sequence.length) return;
     resetAnswerButtons();
     resetTrainFeedback();
-    var pair = pairs[pairIndex];
-    $('#num1').text(pair[0].toString());
-    $('#num2').text(pair[1].toString());
-    $('#number').show();
-    numberSequence.push(pair[0] + pair[1]);
+    var current = sequence[sequenceIndex];
+    $('#nBackImage').attr('src', '../static/data/nBackImage/' + current.toString() + '.svg').show();
+    imageSequence.push(current);
     userAns.push(0);
     ansCheck.push(0);
     startTime.push(Date.now());
     endTime.push(0);
-    if (numberSequence.length <= 1) {
+    if (imageSequence.length <= 1) {
         hideAnswerButtons();
         resetTrainFeedback();
     } else {
         showAnswerButtons();
-        showTrainTarget(isTarget(numberSequence.length - 1));
+        showTrainTarget(isTarget(imageSequence.length - 1));
     }
-    pairIndex += 1;
-    setTimeout(hideNum, 500);
+    sequenceIndex += 1;
+    setTimeout(hideImage, 500);
     setTimeout(function() {
-        if (pairIndex < pairs.length) {
-            changeNum();
+        if (sequenceIndex < sequence.length) {
+            changeImage();
         } else {
             window.location.href = '../templates/train.html';
         }
     }, 3000);
 }
 
-function hideNum() {
-    $('#number').hide();
+function hideImage() {
+    $('#nBackImage').hide();
 }
 
 function userAnsCheck(isCorrectAnswer) {
-    var index = numberSequence.length - 1;
+    var index = imageSequence.length - 1;
     if (index <= 0) return;
     var isAnswerCorrect = isCorrectAnswer === isTarget(index);
     userAns[index] = isAnswerCorrect ? 1 : -1;
@@ -55,10 +53,10 @@ function userAnsCheck(isCorrectAnswer) {
 }
 
 $(document).ready(function() {
-    $('#number').hide();
+    $('#nBackImage').hide();
     hideAnswerButtons();
     setTimeout(function() {
         $('#description').css({'fontSize': '20px', 'margin-top': '0'});
-        changeNum();
+        changeImage();
     }, 3000);
 });

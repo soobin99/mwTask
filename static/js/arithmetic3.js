@@ -1,4 +1,4 @@
-var maxCnt = TASK_CONFIG.maxCnt;
+﻿var maxCnt = TASK_CONFIG.maxCnt;
 var numberSequence = [];
 var userAns = [];
 var ansCheck = [];

@@ -1,20 +1,20 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3-Back Train</title>
-    <link rel="stylesheet" href="../static/styles.css">
+    <link rel="stylesheet" href="../static/js/styles.css">
 </head>
 <body class="task-page">
     <main class="page-shell">
         <section class="content-panel task-panel">
             <div class="training-info">
                 <div class="training-sequence" aria-label="3-back 예시">
-                    <img class="highlight-frame" src="../static/nBackImage/3.svg" alt="첫 번째 이미지">
-                    <img src="../static/nBackImage/6.svg" alt="두 번째 이미지">
-                    <img src="../static/nBackImage/8.svg" alt="세 번째 이미지">
-                    <img class="highlight-frame" src="../static/nBackImage/3.svg" alt="마지막 이미지">
+                    <img class="highlight-frame" src="../static/data/nBackImage/3.svg" alt="첫 번째 이미지">
+                    <img src="../static/data/nBackImage/6.svg" alt="두 번째 이미지">
+                    <img src="../static/data/nBackImage/8.svg" alt="세 번째 이미지">
+                    <img class="highlight-frame" src="../static/data/nBackImage/3.svg" alt="마지막 이미지">
                 </div>
                 <div>
                     <h2>3-Back Train 안내</h2>
@@ -32,12 +32,12 @@
                 <button id="incorrectAnsButton" class="answer-button" type="button" onclick="submitAnswer(false)">정답이 아닙니다</button>
             </div>
             <div class="stimulus-area">
-                <img id="nBackImage" class="stimulus-image" src="../static/nBackImage/1.svg" alt="n-back stimulus">
+                <img id="nBackImage" class="stimulus-image" src="../static/data/nBackImage/1.svg" alt="n-back stimulus">
             </div>
         </section>
     </main>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="../static/taskButtons.js"></script>
-    <script src="../static/3backTrain.js"></script>
+    <script src="../static/js/taskButtons.js"></script>
+    <script src="../static/js/3backTrain.js"></script>
 </body>
 </html>

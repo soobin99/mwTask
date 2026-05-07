@@ -1,10 +1,10 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>참여자 정보 입력</title>
-    <link rel="stylesheet" href="../static/styles.css" />
+    <link rel="stylesheet" href="../static/js/styles.css" />
   </head>
   <body>
     <main class="page-shell">
@@ -15,17 +15,6 @@
 
         <form id="participantForm" novalidate>
           <div class="field-grid">
-            <label class="field">
-              <span>이름</span>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                autocomplete="name"
-                placeholder="이름을 입력하세요"
-              />
-            </label>
-
             <label class="field">
               <span>나이</span>
               <input
@@ -120,7 +109,7 @@
     <script>
       const form = document.getElementById("participantForm");
       const nextButton = document.getElementById("nextButton");
-      const requiredFields = ["name", "age", "education", "visualization"];
+      const requiredFields = ["age", "education", "visualization"];
 
       function isFormComplete() {
         const formData = new FormData(form);

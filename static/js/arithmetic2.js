@@ -1,11 +1,12 @@
-var maxCnt = TASK_CONFIG.maxCnt;
-var imageSequence = [];
+﻿var maxCnt = TASK_CONFIG.maxCnt;
+var numberSequence = [];
 var userAns = [];
 var ansCheck = [];
 var startTime = [];
 var endTime = [];
-var num = 1;
-var targetSchedule = createTargetSchedule(maxCnt, 3);
+var num1 = 1;
+var num2 = 1;
+var targetSchedule = createTargetSchedule(maxCnt, 1);
 
 function createTargetSchedule(total, minIndex) {
     var schedule = Array(total).fill(false);
@@ -21,48 +22,64 @@ function createTargetSchedule(total, minIndex) {
     return schedule;
 }
 
-function getDifferentImage(target) {
-    var next = Math.floor(Math.random() * 8) + 1;
-    return next >= target ? next + 1 : next;
+function getRandomInt() {
+    var nextIndex = numberSequence.length;
+    if (nextIndex === 0) {
+        setPairForSum(Math.floor(Math.random() * 17) + 2);
+        return;
+    }
+    var targetSum = 20 - numberSequence[nextIndex - 1];
+    var sum = targetSchedule[nextIndex] ? targetSum : getRandomNonTargetSum(targetSum);
+    setPairForSum(sum);
 }
 
-function getRandomInt(nextIndex) {
-    if (nextIndex < 3) return Math.floor(Math.random() * 9) + 1;
-    var target = imageSequence[nextIndex - 3];
-    return targetSchedule[nextIndex] ? target : getDifferentImage(target);
+function getRandomNonTargetSum(target) {
+    var sum = Math.floor(Math.random() * 17) + 2;
+    while (sum === target) {
+        sum = Math.floor(Math.random() * 17) + 2;
+    }
+    return sum;
+}
+
+function setPairForSum(sum) {
+    var min = Math.max(1, sum - 9);
+    var max = Math.min(9, sum - 1);
+    num1 = Math.floor(Math.random() * (max - min + 1)) + min;
+    num2 = sum - num1;
 }
 
 function isTarget(index) {
-    return index >= 3 && imageSequence[index] === imageSequence[index - 3];
+    return index > 0 && numberSequence[index] + numberSequence[index - 1] === 20;
 }
 
-function changeImage() {
-    if (imageSequence.length >= maxCnt) return;
+function changeNum() {
+    if (numberSequence.length >= maxCnt) return;
     resetAnswerButtons();
-    $('#nBackImage').show();
-    imageSequence.push(num);
+    $('#number').show();
+    numberSequence.push(num1 + num2);
     userAns.push(0);
     ansCheck.push(0);
     startTime.push(Date.now());
     endTime.push(0);
-    setTimeout(hideImage, 500);
+    setTimeout(hideNum, 500);
     setTimeout(function() {
-        if (imageSequence.length < maxCnt) {
-            changeImage();
+        if (numberSequence.length < maxCnt) {
+            changeNum();
         } else {
-            completeTask('3back', buildRows());
+            completeTask('arithmetic2', buildRows());
         }
     }, 3000);
 }
 
-function hideImage() {
-    $('#nBackImage').hide();
-    num = getRandomInt(imageSequence.length);
-    $('#nBackImage').attr('src', '../static/nBackImage/' + num.toString() + '.svg');
+function hideNum() {
+    $('#number').hide();
+    getRandomInt();
+    $('#num1').text(num1.toString());
+    $('#num2').text(num2.toString());
 }
 
 function userAnsCheck(isCorrectAnswer) {
-    var index = imageSequence.length - 1;
+    var index = numberSequence.length - 1;
     if (index < 0) return;
     userAns[index] = isCorrectAnswer === isTarget(index) ? 1 : -1;
     ansCheck[index] = 1;
@@ -70,7 +87,7 @@ function userAnsCheck(isCorrectAnswer) {
 }
 
 function buildRows() {
-    return imageSequence.map(function(stimulus, index) {
+    return numberSequence.map(function(stimulus, index) {
         return {
             cnt: index,
             stimulus: stimulus,
@@ -85,11 +102,11 @@ function buildRows() {
 }
 
 function downloadCSV() {
-    var rows = [{cnt: 'cnt', imageSequence: 'imageSequence', userAns: 'userAns', ansCheck: 'ansCheck', startTime: 'startTime', endTime: 'endTime', responseTime: 'responseTime'}];
-    for (var i = 0; i < imageSequence.length; i++) {
+    var rows = [{cnt: 'cnt', numberSequence: 'numberSequence', userAns: 'userAns', ansCheck: 'ansCheck', startTime: 'startTime', endTime: 'endTime', responseTime: 'responseTime'}];
+    for (var i = 0; i < numberSequence.length; i++) {
         rows.push({
             cnt: i,
-            imageSequence: imageSequence[i],
+            numberSequence: numberSequence[i],
             userAns: userAns[i],
             ansCheck: ansCheck[i],
             startTime: startTime[i],
@@ -99,23 +116,26 @@ function downloadCSV() {
     }
     var csv = '';
     $.each(rows, function(i, item) {
-        csv += item.cnt + ',' + item.imageSequence + ',' + item.userAns + ',' + item.ansCheck + ',' + item.startTime + ',' + item.endTime + ',' + item.responseTime + '\r\n';
+        csv += item.cnt + ',' + item.numberSequence + ',' + item.userAns + ',' + item.ansCheck + ',' + item.startTime + ',' + item.endTime + ',' + item.responseTime + '\r\n';
     });
     var downloadLink = document.createElement('a');
     var blob = new Blob([csv], {type: 'text/csv;charset=utf-8'});
     downloadLink.href = URL.createObjectURL(blob);
-    downloadLink.download = '3back_' + new Date().toString() + '.csv';
+    downloadLink.download = 'arithmetic2_' + new Date().toString() + '.csv';
     document.body.appendChild(downloadLink);
     downloadLink.click();
     document.body.removeChild(downloadLink);
 }
 
 $(document).ready(function() {
-    $('#nBackImage').hide();
+    $('#number').hide();
     hideAnswerButtons();
+    getRandomInt();
+    $('#num1').text(num1.toString());
+    $('#num2').text(num2.toString());
     setTimeout(function() {
         $('#description').css({'fontSize': '20px', 'margin-top': '0'});
         showAnswerButtons();
-        changeImage();
+        changeNum();
     }, 3000);
 });

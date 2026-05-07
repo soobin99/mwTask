@@ -1,4 +1,4 @@
-function showAnswerButtons() {
+﻿function showAnswerButtons() {
     $('.answer-actions').css('display', 'grid');
 }
 

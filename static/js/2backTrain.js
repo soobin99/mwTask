@@ -1,13 +1,13 @@
-var imageSequence = [];
+﻿var imageSequence = [];
 var userAns = [];
 var ansCheck = [];
 var startTime = [];
 var endTime = [];
-var sequence = [3, 6, 8, 3, 9];
+var sequence = [2, 5, 2, 7];
 var sequenceIndex = 0;
 
 function isTarget(index) {
-    return index >= 3 && imageSequence[index] === imageSequence[index - 3];
+    return index >= 2 && imageSequence[index] === imageSequence[index - 2];
 }
 
 function changeImage() {
@@ -15,13 +15,13 @@ function changeImage() {
     resetAnswerButtons();
     resetTrainFeedback();
     var current = sequence[sequenceIndex];
-    $('#nBackImage').attr('src', '../static/nBackImage/' + current.toString() + '.svg').show();
+    $('#nBackImage').attr('src', '../static/data/nBackImage/' + current.toString() + '.svg').show();
     imageSequence.push(current);
     userAns.push(0);
     ansCheck.push(0);
     startTime.push(Date.now());
     endTime.push(0);
-    if (imageSequence.length <= 3) {
+    if (imageSequence.length <= 2) {
         hideAnswerButtons();
         resetTrainFeedback();
     } else {
@@ -45,7 +45,7 @@ function hideImage() {
 
 function userAnsCheck(isCorrectAnswer) {
     var index = imageSequence.length - 1;
-    if (index < 3) return;
+    if (index < 2) return;
     var isAnswerCorrect = isCorrectAnswer === isTarget(index);
     userAns[index] = isAnswerCorrect ? 1 : -1;
     ansCheck[index] = 1;

@@ -1,4 +1,4 @@
-var maxCnt = TASK_CONFIG.maxCnt;
+﻿var maxCnt = TASK_CONFIG.maxCnt;
 var imageSequence = [];
 var userAns = [];
 var ansCheck = [];
@@ -73,7 +73,7 @@ function changeImage() {
 function hideImage() {
     $('#nBackImage').hide();
     num = getRandomInt(imageSequence.length);
-    $('#nBackImage').attr('src', '../static/nBackImage/' + num.toString() + '.svg');
+    $('#nBackImage').attr('src', '../static/data/nBackImage/' + num.toString() + '.svg');
 }
 
 function userAnsCheck(isCorrectAnswer) {

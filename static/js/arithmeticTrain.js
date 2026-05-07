@@ -1,13 +1,13 @@
-var numberSequence = [];
+﻿var numberSequence = [];
 var userAns = [];
 var ansCheck = [];
 var startTime = [];
 var endTime = [];
-var pairs = [[4, 5], [6, 5], [5, 5], [4, 5]];
+var pairs = [[4, 6], [5, 6]];
 var pairIndex = 0;
 
 function isTarget(index) {
-    return index > 1 && numberSequence[index] + numberSequence[index - 1] + numberSequence[index - 2] === 30;
+    return numberSequence[index] === 10;
 }
 
 function changeNum() {
@@ -23,13 +23,8 @@ function changeNum() {
     ansCheck.push(0);
     startTime.push(Date.now());
     endTime.push(0);
-    if (numberSequence.length <= 2) {
-        hideAnswerButtons();
-        resetTrainFeedback();
-    } else {
-        showAnswerButtons();
-        showTrainTarget(isTarget(numberSequence.length - 1));
-    }
+    showAnswerButtons();
+    showTrainTarget(isTarget(numberSequence.length - 1));
     pairIndex += 1;
     setTimeout(hideNum, 500);
     setTimeout(function() {
@@ -47,7 +42,7 @@ function hideNum() {
 
 function userAnsCheck(isCorrectAnswer) {
     var index = numberSequence.length - 1;
-    if (index < 2) return;
+    if (index < 0) return;
     var isAnswerCorrect = isCorrectAnswer === isTarget(index);
     userAns[index] = isAnswerCorrect ? 1 : -1;
     ansCheck[index] = 1;
