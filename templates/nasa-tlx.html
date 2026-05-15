@@ -39,6 +39,7 @@
         const isLastVlat = isVlatFlow && isLastVlatTask();
         const isSvFlow = sessionStorage.getItem('currentFlow') === 'sv';
         const isLastSv = isSvFlow && isLastSvTask();
+        const previousTlxScores = JSON.parse(sessionStorage.getItem('lastTlxScores') || '{}');
 
         if ((isVlatFlow && !isLastVlat) || (isSvFlow && !isLastSv)) {
             actionButton.textContent = '다음으로';
@@ -53,8 +54,10 @@
             const choices = document.createElement('label');
             choices.className = 'tlx-select-row';
             const options = [];
+            const defaultScore = previousTlxScores[question.key] || '0';
             for (let score = 0; score <= 100; score += 5) {
-                options.push(`<option value="${score}">${score}</option>`);
+                const selected = String(score) === String(defaultScore) ? ' selected' : '';
+                options.push(`<option value="${score}"${selected}>${score}</option>`);
             }
             choices.innerHTML = `
                 <select name="q${questionIndex}">
@@ -70,6 +73,18 @@
             return questions.every((_, index) => {
                 return document.querySelector(`select[name="q${index}"]`).value !== '';
             });
+        }
+
+        function collectTlxScores() {
+            const scores = questions.map((question, index) => ({
+                question: question.key,
+                score: document.querySelector(`select[name="q${index}"]`).value
+            }));
+            sessionStorage.setItem('lastTlxScores', JSON.stringify(scores.reduce((acc, item) => {
+                acc[item.question] = item.score;
+                return acc;
+            }, {})));
+            return scores;
         }
 
         document.getElementById('tlxForm').addEventListener('change', () => {
@@ -93,28 +108,19 @@
             }
 
             if (actionButton.dataset.state === 'sv-next') {
-                const scores = questions.map((question, index) => ({
-                    question: question.key,
-                    score: document.querySelector(`select[name="q${index}"]`).value
-                }));
+                const scores = collectTlxScores();
                 continueSvAfterTlx(scores);
                 return;
             }
 
             if (actionButton.dataset.state === 'vlat-next') {
-                const scores = questions.map((question, index) => ({
-                    question: question.key,
-                    score: document.querySelector(`select[name="q${index}"]`).value
-                }));
+                const scores = collectTlxScores();
                 continueVlatAfterTlx(scores);
                 return;
             }
 
             if (!isComplete()) return;
-            const scores = questions.map((question, index) => ({
-                question: question.key,
-                score: document.querySelector(`select[name="q${index}"]`).value
-            }));
+            const scores = collectTlxScores();
             if (sessionStorage.getItem('currentFlow') === 'vlat') {
                 saveVlatTlx(scores);
             } else if (sessionStorage.getItem('currentFlow') === 'sv') {
