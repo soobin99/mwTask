@@ -83,7 +83,28 @@ function startRandomTestFlow() {
   sessionStorage.setItem("taskOrder", JSON.stringify(shuffleTasks(TEST_TASKS)));
   sessionStorage.setItem("taskIndex", "0");
   sessionStorage.removeItem("currentTaskResult");
+  resetVisualizationProgress();
   goToCurrentTask();
+}
+
+function resetVisualizationProgress() {
+  [
+    "visualizationOrder",
+    "visualizationIndex",
+    "currentFlow",
+    "vlatTasks",
+    "vlatIndex",
+    "vlatResults",
+    "currentVlatResult",
+    "vlatNextPath",
+    "svTasks",
+    "svIndex",
+    "svResults",
+    "currentSvResult",
+    "svNextPath",
+  ].forEach(function (key) {
+    sessionStorage.removeItem(key);
+  });
 }
 
 function getTaskOrder() {
@@ -109,7 +130,7 @@ function startCurrentTask() {
   var order = getTaskOrder();
   var index = getTaskIndex();
   if (index >= order.length) {
-    window.location.href = "visualizationInfo.html";
+    startVisualizationFlow();
     return;
   }
   window.location.href = order[index].path;
@@ -123,7 +144,12 @@ function skipCurrentTask() {
 }
 
 function startVisualizationFlow() {
-  if (!sessionStorage.getItem("visualizationOrder")) {
+  var storedOrder = sessionStorage.getItem("visualizationOrder");
+  var storedIndex = getVisualizationIndex();
+  var shouldCreateOrder =
+    !storedOrder || storedIndex >= JSON.parse(storedOrder).length;
+
+  if (shouldCreateOrder) {
     var order = shuffleTasks(["vlat", "sv"]);
     sessionStorage.setItem("visualizationOrder", JSON.stringify(order));
     sessionStorage.setItem("visualizationIndex", "0");
