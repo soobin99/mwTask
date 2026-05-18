@@ -35,6 +35,11 @@ body {
     padding: 48px 0;
 }
 
+body.visual-task-page .page-shell {
+    width: min(100% - 20px, 1900px);
+    padding: 16px 0;
+}
+
 .content-panel {
     width: 100%;
     background: var(--panel);
@@ -582,13 +587,14 @@ h1 {
 }
 
 .vlat-panel {
-    max-width: min(96vw, 1900px);
-    padding: 34px;
+    max-width: 100%;
+    min-height: 94vh;
+    padding: 30px;
 }
 
 .vlat-layout {
     display: grid;
-    grid-template-columns: minmax(0, 2.35fr) minmax(280px, 0.65fr);
+    grid-template-columns: minmax(0, 3.4fr) minmax(260px, 0.6fr);
     gap: 32px;
     align-items: start;
 }

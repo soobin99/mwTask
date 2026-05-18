@@ -11,7 +11,7 @@ function resetAnswerButtons() {
 }
 
 function markAnswerButton(isCorrectAnswer) {
-    resetAnswerButtons();
+    $('.answer-button').removeClass('is-correct-selected is-incorrect-selected');
     if (isCorrectAnswer) {
         $('#correctAnsButton').addClass('is-correct-selected');
     } else {
@@ -20,6 +20,7 @@ function markAnswerButton(isCorrectAnswer) {
 }
 
 function submitAnswer(isCorrectAnswer) {
+    if (!$('.answer-actions').is(':visible')) return;
     if (typeof userAnsCheck === 'function') {
         userAnsCheck(isCorrectAnswer);
         markAnswerButton(isCorrectAnswer);
@@ -47,3 +48,16 @@ function showTrainTarget(isTargetTrial) {
         .addClass(isTargetTrial ? 'correct' : 'incorrect')
         .text(isTargetTrial ? '"정답입니다"를 선택해주세요' : '"정답이 아닙니다"를 선택해주세요');
 }
+
+$(document).on('keydown', function(event) {
+    var tagName = event.target.tagName ? event.target.tagName.toLowerCase() : '';
+    if (tagName === 'input' || tagName === 'select' || tagName === 'textarea') return;
+
+    if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        submitAnswer(true);
+    } else if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        submitAnswer(false);
+    }
+});
