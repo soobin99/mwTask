@@ -90,7 +90,8 @@ function userAnsCheck(isCorrectAnswer) {
     if (currentRequiresResponse) {
         currentRequiresResponse = false;
         clearTimeout(advanceTimer);
-        advanceTimer = setTimeout(advanceTrain, 500);
+        hideImage();
+        advanceTimer = setTimeout(advanceTrain, 1200);
     }
 }
 
