@@ -1,20 +1,45 @@
-﻿var imageSequence = [];
+var N_BACK = 3;
+var REQUIRED_RESPONSE_COUNT = 5;
+var AUTO_RESPONSE_COUNT = 5;
+var TARGET_PATTERN = [true, false, true, false, true, false, true, false, true, false];
+
+var imageSequence = [];
 var userAns = [];
 var ansCheck = [];
 var startTime = [];
 var endTime = [];
-var sequence = [3, 6, 8, 3, 9];
+var sequence = buildTrainSequence();
 var sequenceIndex = 0;
-var redirectTimer = null;
+var currentRequiresResponse = false;
+var advanceTimer = null;
+
+function buildTrainSequence() {
+    var generated = [3, 6, 8];
+    TARGET_PATTERN.forEach(function(isTarget) {
+        var compareValue = generated[generated.length - N_BACK];
+        generated.push(isTarget ? compareValue : getDifferentImage(compareValue));
+    });
+    return generated;
+}
+
+function getDifferentImage(target) {
+    var next = Math.floor(Math.random() * 8) + 1;
+    return next >= target ? next + 1 : next;
+}
 
 function isTarget(index) {
-    return index >= 3 && imageSequence[index] === imageSequence[index - 3];
+    return index >= N_BACK && imageSequence[index] === imageSequence[index - N_BACK];
+}
+
+function getAnswerTrialNumber() {
+    return imageSequence.length - N_BACK;
 }
 
 function changeImage() {
     if (sequenceIndex >= sequence.length) return;
     resetAnswerButtons();
     resetTrainFeedback();
+
     var current = sequence[sequenceIndex];
     $('#nBackImage').attr('src', '../static/data/nBackImage/' + current.toString() + '.svg').show();
     imageSequence.push(current);
@@ -22,24 +47,32 @@ function changeImage() {
     ansCheck.push(0);
     startTime.push(Date.now());
     endTime.push(0);
-    if (imageSequence.length <= 3) {
+
+    if (imageSequence.length <= N_BACK) {
         hideAnswerButtons();
-        resetTrainFeedback();
+        currentRequiresResponse = false;
     } else {
         showAnswerButtons();
         showTrainTarget(isTarget(imageSequence.length - 1));
+        currentRequiresResponse = getAnswerTrialNumber() <= REQUIRED_RESPONSE_COUNT;
     }
+
     sequenceIndex += 1;
     setTimeout(hideImage, 500);
-    redirectTimer = setTimeout(function() {
-        if (sequenceIndex < sequence.length) {
-            changeImage();
-        } else {
-            hideImage();
-            hideAnswerButtons();
-            window.location.href = '../templates/train.html';
-        }
-    }, 3000);
+    if (!currentRequiresResponse) {
+        advanceTimer = setTimeout(advanceTrain, 3000);
+    }
+}
+
+function advanceTrain() {
+    if (sequenceIndex < sequence.length) {
+        changeImage();
+    } else {
+        hideImage();
+        hideAnswerButtons();
+        resetTrainFeedback();
+        window.location.href = '../templates/train.html';
+    }
 }
 
 function hideImage() {
@@ -48,11 +81,17 @@ function hideImage() {
 
 function userAnsCheck(isCorrectAnswer) {
     var index = imageSequence.length - 1;
-    if (index < 3) return;
+    if (index < N_BACK) return;
     var isAnswerCorrect = isCorrectAnswer === isTarget(index);
     userAns[index] = isAnswerCorrect ? 1 : -1;
     ansCheck[index] = 1;
     endTime[index] = Date.now();
+
+    if (currentRequiresResponse) {
+        currentRequiresResponse = false;
+        clearTimeout(advanceTimer);
+        advanceTimer = setTimeout(advanceTrain, 500);
+    }
 }
 
 $(document).ready(function() {
