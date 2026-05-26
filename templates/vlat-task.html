@@ -56,8 +56,17 @@
             `);
         });
 
+        function markSelectedChoice(input) {
+            choices.querySelectorAll('label').forEach((label) => {
+                label.classList.remove('is-selected');
+            });
+            const selectedLabel = choices.querySelector(`label[for="${input.id}"]`);
+            if (selectedLabel) selectedLabel.classList.add('is-selected');
+        }
+
         choices.addEventListener('change', (event) => {
             selectedAnswer = event.target.value;
+            markSelectedChoice(event.target);
             submitButton.classList.remove('hidden');
         });
 

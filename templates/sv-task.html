@@ -47,10 +47,19 @@
         const choices = document.getElementById('svChoices');
         const submitButton = document.getElementById('submitAnswerButton');
 
+        function markSelectedChoice(input) {
+            choices.querySelectorAll('label').forEach((label) => {
+                label.classList.remove('is-selected');
+            });
+            const selectedLabel = input.closest('label') || choices.querySelector(`label[for="${input.id}"]`);
+            if (selectedLabel) selectedLabel.classList.add('is-selected');
+        }
+
         choices.querySelectorAll('input[type="radio"]').forEach((input) => {
             input.name = 'svAnswer';
             input.addEventListener('change', () => {
                 selectedAnswer = input.value;
+                markSelectedChoice(input);
                 submitButton.classList.remove('hidden');
             });
         });

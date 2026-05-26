@@ -642,7 +642,8 @@ h1 {
     cursor: pointer;
 }
 
-.vlat-choices input:checked + label {
+.vlat-choices input:checked + label,
+.vlat-choices label.is-selected {
     border-color: var(--accent);
     background: var(--accent);
     color: #ffffff;
